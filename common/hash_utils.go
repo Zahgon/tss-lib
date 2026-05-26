@@ -12,7 +12,7 @@ import (
 
 // RejectionSample implements the rejection sampling logic for converting a
 // SHA512/256 hash to a value between 0-q
-func RejectionSample(q *big.Int, eHash *big.Int) *big.Int { // e' = eHash
-	e := eHash.Mod(eHash, q)
-	return e
+func RejectionSample(q *big.Int, eHash *big.Int) *big.Int {
+	_ = "STUB: not implemented" // e' = eHash
+	return nil
 }

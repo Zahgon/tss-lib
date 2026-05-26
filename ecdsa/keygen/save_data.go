@@ -7,8 +7,6 @@
 package keygen
 
 import (
-	"encoding/hex"
-	"errors"
 	"math/big"
 
 	"github.com/bnb-chain/tss-lib/v3/crypto"
@@ -51,52 +49,16 @@ type (
 )
 
 func NewLocalPartySaveData(partyCount int) (saveData LocalPartySaveData) {
-	saveData.Ks = make([]*big.Int, partyCount)
-	saveData.NTildej = make([]*big.Int, partyCount)
-	saveData.H1j, saveData.H2j = make([]*big.Int, partyCount), make([]*big.Int, partyCount)
-	saveData.BigXj = make([]*crypto.ECPoint, partyCount)
-	saveData.PaillierPKs = make([]*paillier.PublicKey, partyCount)
-	return
+	_ = "STUB: not implemented"
+	return *new(LocalPartySaveData)
 }
 
-func (preParams LocalPreParams) Validate() bool {
-	return preParams.PaillierSK != nil &&
-		preParams.NTildei != nil &&
-		preParams.H1i != nil &&
-		preParams.H2i != nil
-}
+func (preParams LocalPreParams) Validate() bool { _ = "STUB: not implemented"; return false }
 
-func (preParams LocalPreParams) ValidateWithProof() bool {
-	return preParams.Validate() &&
-		preParams.PaillierSK.P != nil &&
-		preParams.PaillierSK.Q != nil &&
-		preParams.Alpha != nil &&
-		preParams.Beta != nil &&
-		preParams.P != nil &&
-		preParams.Q != nil
-}
+func (preParams LocalPreParams) ValidateWithProof() bool { _ = "STUB: not implemented"; return false }
 
 // BuildLocalSaveDataSubset re-creates the LocalPartySaveData to contain data for only the list of signing parties.
 func BuildLocalSaveDataSubset(sourceData LocalPartySaveData, sortedIDs tss.SortedPartyIDs) LocalPartySaveData {
-	keysToIndices := make(map[string]int, len(sourceData.Ks))
-	for j, kj := range sourceData.Ks {
-		keysToIndices[hex.EncodeToString(kj.Bytes())] = j
-	}
-	newData := NewLocalPartySaveData(sortedIDs.Len())
-	newData.LocalPreParams = sourceData.LocalPreParams
-	newData.LocalSecrets = sourceData.LocalSecrets
-	newData.ECDSAPub = sourceData.ECDSAPub
-	for j, id := range sortedIDs {
-		savedIdx, ok := keysToIndices[hex.EncodeToString(id.Key)]
-		if !ok {
-			panic(errors.New("BuildLocalSaveDataSubset: unable to find a signer party in the local save data"))
-		}
-		newData.Ks[j] = sourceData.Ks[savedIdx]
-		newData.NTildej[j] = sourceData.NTildej[savedIdx]
-		newData.H1j[j] = sourceData.H1j[savedIdx]
-		newData.H2j[j] = sourceData.H2j[savedIdx]
-		newData.BigXj[j] = sourceData.BigXj[savedIdx]
-		newData.PaillierPKs[j] = sourceData.PaillierPKs[savedIdx]
-	}
-	return newData
+	_ = "STUB: not implemented"
+	return *new(LocalPartySaveData)
 }

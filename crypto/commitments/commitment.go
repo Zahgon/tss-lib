@@ -12,8 +12,6 @@ package commitments
 import (
 	"io"
 	"math/big"
-
-	"github.com/bnb-chain/tss-lib/v3/common"
 )
 
 const (
@@ -31,42 +29,27 @@ type (
 )
 
 func NewHashCommitmentWithRandomness(r *big.Int, secrets ...*big.Int) *HashCommitDecommit {
-	parts := make([]*big.Int, len(secrets)+1)
-	parts[0] = r
-	for i := 1; i < len(parts); i++ {
-		parts[i] = secrets[i-1]
-	}
-	hash := common.SHA512_256i(parts...)
-
-	cmt := &HashCommitDecommit{}
-	cmt.C = hash
-	cmt.D = parts
-	return cmt
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func NewHashCommitment(rand io.Reader, secrets ...*big.Int) *HashCommitDecommit {
-	r := common.MustGetRandomInt(rand, HashLength) // r
-	return NewHashCommitmentWithRandomness(r, secrets...)
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// r
 
 func NewHashDeCommitmentFromBytes(marshalled [][]byte) HashDeCommitment {
-	return common.MultiBytesToBigInts(marshalled)
+	_ = "STUB: not implemented"
+	return *new(HashDeCommitment)
 }
 
-func (cmt *HashCommitDecommit) Verify() bool {
-	C, D := cmt.C, cmt.D
-	if C == nil || D == nil {
-		return false
-	}
-	hash := common.SHA512_256i(D...)
-	return hash.Cmp(C) == 0
-}
+func (cmt *HashCommitDecommit) Verify() bool { _ = "STUB: not implemented"; return false }
 
 func (cmt *HashCommitDecommit) DeCommit() (bool, HashDeCommitment) {
-	if cmt.Verify() {
-		// [1:] skips random element r in D
-		return true, cmt.D[1:]
-	} else {
-		return false, nil
-	}
+	_ = "STUB: not implemented"
+
+	// [1:] skips random element r in D
+	return false, *new(HashDeCommitment)
 }

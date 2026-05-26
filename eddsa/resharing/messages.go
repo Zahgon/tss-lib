@@ -10,7 +10,6 @@ import (
 	"crypto/elliptic"
 	"math/big"
 
-	"github.com/bnb-chain/tss-lib/v3/common"
 	"github.com/bnb-chain/tss-lib/v3/crypto"
 	cmt "github.com/bnb-chain/tss-lib/v3/crypto/commitments"
 	"github.com/bnb-chain/tss-lib/v3/crypto/vss"
@@ -38,38 +37,18 @@ func NewDGRound1Message(
 	eddsaPub *crypto.ECPoint,
 	vct cmt.HashCommitment,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:             from,
-		To:               to,
-		IsBroadcast:      true,
-		IsToOldCommittee: false,
-	}
-	content := &DGRound1Message{
-		EddsaPubX:   eddsaPub.X().Bytes(),
-		EddsaPubY:   eddsaPub.Y().Bytes(),
-		VCommitment: vct.Bytes(),
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *DGRound1Message) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyBytes(m.EddsaPubX) &&
-		common.NonEmptyBytes(m.EddsaPubY) &&
-		common.NonEmptyBytes(m.VCommitment)
-}
+func (m *DGRound1Message) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 func (m *DGRound1Message) UnmarshalEDDSAPub(ec elliptic.Curve) (*crypto.ECPoint, error) {
-	return crypto.NewECPoint(
-		ec,
-		new(big.Int).SetBytes(m.EddsaPubX),
-		new(big.Int).SetBytes(m.EddsaPubY))
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (m *DGRound1Message) UnmarshalVCommitment() *big.Int {
-	return new(big.Int).SetBytes(m.GetVCommitment())
-}
+func (m *DGRound1Message) UnmarshalVCommitment() *big.Int { _ = "STUB: not implemented"; return nil }
 
 // ----- //
 
@@ -77,45 +56,27 @@ func NewDGRound2Message(
 	to []*tss.PartyID,
 	from *tss.PartyID,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:             from,
-		To:               to,
-		IsBroadcast:      true,
-		IsToOldCommittee: true,
-	}
-	content := &DGRound2Message{}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
 func (m *DGRound2Message) ValidateBasic() bool {
-	return true
-}
+	_ = "STUB: not implemented"
 
-// ----- //
+	// ----- //
+	return false
+}
 
 func NewDGRound3Message1(
 	to *tss.PartyID,
 	from *tss.PartyID,
 	share *vss.Share,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:             from,
-		To:               []*tss.PartyID{to},
-		IsBroadcast:      false,
-		IsToOldCommittee: false,
-	}
-	content := &DGRound3Message1{
-		Share: share.Share.Bytes(),
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *DGRound3Message1) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyBytes(m.Share)
-}
+func (m *DGRound3Message1) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 // ----- //
 
@@ -124,28 +85,15 @@ func NewDGRound3Message2(
 	from *tss.PartyID,
 	vdct cmt.HashDeCommitment,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:             from,
-		To:               to,
-		IsBroadcast:      true,
-		IsToOldCommittee: false,
-	}
-	vDctBzs := common.BigIntsToBytes(vdct)
-	content := &DGRound3Message2{
-		VDecommitment: vDctBzs,
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *DGRound3Message2) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyMultiBytes(m.VDecommitment)
-}
+func (m *DGRound3Message2) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 func (m *DGRound3Message2) UnmarshalVDeCommitment() cmt.HashDeCommitment {
-	deComBzs := m.GetVDecommitment()
-	return cmt.NewHashDeCommitmentFromBytes(deComBzs)
+	_ = "STUB: not implemented"
+	return *new(cmt.HashDeCommitment)
 }
 
 // ----- //
@@ -154,17 +102,8 @@ func NewDGRound4Message(
 	to []*tss.PartyID,
 	from *tss.PartyID,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:                    from,
-		To:                      to,
-		IsBroadcast:             true,
-		IsToOldAndNewCommittees: true,
-	}
-	content := &DGRound4Message{}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *DGRound4Message) ValidateBasic() bool {
-	return true
-}
+func (m *DGRound4Message) ValidateBasic() bool { _ = "STUB: not implemented"; return false }

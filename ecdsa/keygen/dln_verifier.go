@@ -7,7 +7,6 @@
 package keygen
 
 import (
-	"errors"
 	"math/big"
 
 	"github.com/bnb-chain/tss-lib/v3/crypto/dlnproof"
@@ -22,17 +21,7 @@ type message interface {
 	UnmarshalDLNProof2() (*dlnproof.Proof, error)
 }
 
-func NewDlnProofVerifier(concurrency int) *DlnProofVerifier {
-	if concurrency == 0 {
-		panic(errors.New("NewDlnProofverifier: concurrency level must not be zero"))
-	}
-
-	semaphore := make(chan interface{}, concurrency)
-
-	return &DlnProofVerifier{
-		semaphore: semaphore,
-	}
-}
+func NewDlnProofVerifier(concurrency int) *DlnProofVerifier { _ = "STUB: not implemented"; return nil }
 
 func (dpv *DlnProofVerifier) VerifyDLNProof1(
 	Session []byte,
@@ -40,18 +29,8 @@ func (dpv *DlnProofVerifier) VerifyDLNProof1(
 	h1, h2, n *big.Int,
 	onDone func(bool),
 ) {
-	dpv.semaphore <- struct{}{}
-	go func() {
-		defer func() { <-dpv.semaphore }()
-
-		dlnProof, err := m.UnmarshalDLNProof1()
-		if err != nil {
-			onDone(false)
-			return
-		}
-
-		onDone(dlnProof.Verify(Session, h1, h2, n))
-	}()
+	_ = "STUB: not implemented"
+	return
 }
 
 func (dpv *DlnProofVerifier) VerifyDLNProof2(
@@ -60,16 +39,6 @@ func (dpv *DlnProofVerifier) VerifyDLNProof2(
 	h1, h2, n *big.Int,
 	onDone func(bool),
 ) {
-	dpv.semaphore <- struct{}{}
-	go func() {
-		defer func() { <-dpv.semaphore }()
-
-		dlnProof, err := m.UnmarshalDLNProof2()
-		if err != nil {
-			onDone(false)
-			return
-		}
-
-		onDone(dlnProof.Verify(Session, h1, h2, n))
-	}()
+	_ = "STUB: not implemented"
+	return
 }

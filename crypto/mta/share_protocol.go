@@ -8,7 +8,6 @@ package mta
 
 import (
 	"crypto/elliptic"
-	"errors"
 	"io"
 	"math/big"
 	"time"
@@ -35,12 +34,8 @@ func AliceInit(
 	a, NTildeB, h1B, h2B *big.Int,
 	rand io.Reader,
 ) (cA *big.Int, pf *RangeProofAlice, err error) {
-	cA, rA, err := pkA.EncryptAndReturnRandomness(rand, a)
-	if err != nil {
-		return nil, nil, err
-	}
-	pf, err = ProveRangeAlice(Session, ec, pkA, cA, NTildeB, h1B, h2B, a, rA, rand)
-	return cA, pf, err
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
 func BobMid(
@@ -51,31 +46,13 @@ func BobMid(
 	b, cA, NTildeA, h1A, h2A, NTildeB, h1B, h2B *big.Int,
 	rand io.Reader,
 ) (beta, cB, betaPrm *big.Int, piB *ProofBob, err error) {
-	if !pf.Verify(Session, ec, pkA, NTildeB, h1B, h2B, cA) {
-		err = errors.New("RangeProofAlice.Verify() returned false")
-		return
-	}
-	q := ec.Params().N
-	q5 := new(big.Int).Mul(q, q)  // q^2
-	q5 = new(big.Int).Mul(q5, q5) // q^4
-	q5 = new(big.Int).Mul(q5, q)  // q^5
-	betaPrm = common.GetRandomPositiveInt(rand, q5)
-	cBetaPrm, cRand, err := pkA.EncryptAndReturnRandomness(rand, betaPrm)
-	if err != nil {
-		return
-	}
-	cB, err = pkA.HomoMult(b, cA)
-	if err != nil {
-		return
-	}
-	cB, err = pkA.HomoAdd(cB, cBetaPrm)
-	if err != nil {
-		return
-	}
-	beta = common.ModInt(q).Sub(zero, betaPrm)
-	piB, err = ProveBob(Session, ec, pkA, NTildeA, h1A, h2A, cA, cB, b, betaPrm, cRand, rand)
-	return
+	_ = "STUB: not implemented"
+	return nil, nil, nil, nil, nil
 }
+
+// q^2
+// q^4
+// q^5
 
 func BobMidWC(
 	Session []byte,
@@ -86,31 +63,13 @@ func BobMidWC(
 	B *crypto.ECPoint,
 	rand io.Reader,
 ) (beta, cB, betaPrm *big.Int, piB *ProofBobWC, err error) {
-	if !pf.Verify(Session, ec, pkA, NTildeB, h1B, h2B, cA) {
-		err = errors.New("RangeProofAlice.Verify() returned false")
-		return
-	}
-	q := ec.Params().N
-	q5 := new(big.Int).Mul(q, q)  // q^2
-	q5 = new(big.Int).Mul(q5, q5) // q^4
-	q5 = new(big.Int).Mul(q5, q)  // q^5
-	betaPrm = common.GetRandomPositiveInt(rand, q5)
-	cBetaPrm, cRand, err := pkA.EncryptAndReturnRandomness(rand, betaPrm)
-	if err != nil {
-		return
-	}
-	cB, err = pkA.HomoMult(b, cA)
-	if err != nil {
-		return
-	}
-	cB, err = pkA.HomoAdd(cB, cBetaPrm)
-	if err != nil {
-		return
-	}
-	beta = common.ModInt(q).Sub(zero, betaPrm)
-	piB, err = ProveBobWC(Session, ec, pkA, NTildeA, h1A, h2A, cA, cB, b, betaPrm, cRand, B, rand)
-	return
+	_ = "STUB: not implemented"
+	return nil, nil, nil, nil, nil
 }
+
+// q^2
+// q^4
+// q^5
 
 func AliceEnd(
 	Session []byte,
@@ -120,30 +79,14 @@ func AliceEnd(
 	h1A, h2A, cA, cB, NTildeA *big.Int,
 	sk *paillier.PrivateKey,
 ) (*big.Int, error) {
-	if !pf.Verify(Session, ec, pkA, NTildeA, h1A, h2A, cA, cB) {
-		return nil, errors.New("ProofBob.Verify() returned false")
-	}
-
-	var alphaPrm *big.Int
-	var err error
-
-	if common.IsConstantTimeEnabled() {
-		// Apply timing protection to Paillier decryption when constant-time mode is enabled.
-		// This normalizes the response time to prevent timing side-channel attacks.
-		alphaPrm, err = mtaTimingProtection.ProtectBigInt(func() (*big.Int, error) {
-			return sk.Decrypt(cB)
-		})
-	} else {
-		// Standard decryption without timing protection
-		alphaPrm, err = sk.Decrypt(cB)
-	}
-	if err != nil {
-		return nil, err
-	}
-
-	q := ec.Params().N
-	return new(big.Int).Mod(alphaPrm, q), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Apply timing protection to Paillier decryption when constant-time mode is enabled.
+// This normalizes the response time to prevent timing side-channel attacks.
+
+// Standard decryption without timing protection
 
 func AliceEndWC(
 	Session []byte,
@@ -154,27 +97,11 @@ func AliceEndWC(
 	cA, cB, NTildeA, h1A, h2A *big.Int,
 	sk *paillier.PrivateKey,
 ) (*big.Int, error) {
-	if !pf.Verify(Session, ec, pkA, NTildeA, h1A, h2A, cA, cB, B) {
-		return nil, errors.New("ProofBobWC.Verify() returned false")
-	}
-
-	var alphaPrm *big.Int
-	var err error
-
-	if common.IsConstantTimeEnabled() {
-		// Apply timing protection to Paillier decryption when constant-time mode is enabled.
-		// This normalizes the response time to prevent timing side-channel attacks.
-		alphaPrm, err = mtaTimingProtection.ProtectBigInt(func() (*big.Int, error) {
-			return sk.Decrypt(cB)
-		})
-	} else {
-		// Standard decryption without timing protection
-		alphaPrm, err = sk.Decrypt(cB)
-	}
-	if err != nil {
-		return nil, err
-	}
-
-	q := ec.Params().N
-	return new(big.Int).Mod(alphaPrm, q), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Apply timing protection to Paillier decryption when constant-time mode is enabled.
+// This normalizes the response time to prevent timing side-channel attacks.
+
+// Standard decryption without timing protection

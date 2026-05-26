@@ -7,12 +7,7 @@
 package tss
 
 import (
-	"crypto/rand"
-	"fmt"
 	"math/big"
-	"sort"
-
-	"github.com/bnb-chain/tss-lib/v3/common"
 )
 
 type (
@@ -28,122 +23,63 @@ type (
 	SortedPartyIDs   []*PartyID
 )
 
-func (pid *PartyID) ValidateBasic() bool {
-	return pid != nil && pid.Key != nil && 0 <= pid.Index
-}
+func (pid *PartyID) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 // --- ProtoBuf Extensions
 
-func (mpid *MessageWrapper_PartyID) KeyInt() *big.Int {
-	return new(big.Int).SetBytes(mpid.Key)
-}
+func (mpid *MessageWrapper_PartyID) KeyInt() *big.Int { _ = "STUB: not implemented"; return nil }
 
 // ----- //
 
 // NewPartyID constructs a new PartyID
 // Exported, used in `tss` client. `key` should remain consistent between runs for each party.
-func NewPartyID(id, moniker string, key *big.Int) *PartyID {
-	return &PartyID{
-		MessageWrapper_PartyID: &MessageWrapper_PartyID{
-			Id:      id,
-			Moniker: moniker,
-			Key:     key.Bytes(),
-		},
-		Index: -1, // not known until sorted
-	}
-}
+func NewPartyID(id, moniker string, key *big.Int) *PartyID { _ = "STUB: not implemented"; return nil }
 
-func (pid PartyID) String() string {
-	return fmt.Sprintf("{%d,%s}", pid.Index, pid.Moniker)
-}
+// not known until sorted
+
+func (pid PartyID) String() string { _ = "STUB: not implemented"; return "" }
 
 // ----- //
 
 // SortPartyIDs sorts a list of []*PartyID by their keys in ascending order
 // Exported, used in `tss` client
 func SortPartyIDs(ids UnSortedPartyIDs, startAt ...int) SortedPartyIDs {
-	sorted := make(SortedPartyIDs, 0, len(ids))
-	for _, id := range ids {
-		sorted = append(sorted, id)
-	}
-	sort.Sort(sorted)
-	// assign party indexes
-	for i, id := range sorted {
-		frm := 0
-		if len(startAt) > 0 {
-			frm = startAt[0]
-		}
-		id.Index = i + frm
-	}
-	return sorted
+	_ = "STUB: not implemented"
+	return *new(SortedPartyIDs)
 }
+
+// assign party indexes
 
 // GenerateTestPartyIDs generates a list of mock PartyIDs for tests
 func GenerateTestPartyIDs(count int, startAt ...int) SortedPartyIDs {
-	ids := make(UnSortedPartyIDs, 0, count)
-	key := common.MustGetRandomInt(rand.Reader, 256)
-	frm := 0
-	i := 0 // default `i`
-	if len(startAt) > 0 {
-		frm = startAt[0]
-		i = startAt[0]
-	}
-	for ; i < count+frm; i++ {
-		ids = append(ids, &PartyID{
-			MessageWrapper_PartyID: &MessageWrapper_PartyID{
-				Id:      fmt.Sprintf("%d", i+1),
-				Moniker: fmt.Sprintf("P[%d]", i+1),
-				Key:     new(big.Int).Sub(key, big.NewInt(int64(count)-int64(i))).Bytes(),
-			},
-			Index: i,
-			// this key makes tests more deterministic
-		})
-	}
-	return SortPartyIDs(ids, startAt...)
+	_ = "STUB: not implemented"
+	return *new(SortedPartyIDs)
 }
 
-func (spids SortedPartyIDs) Keys() []*big.Int {
-	ids := make([]*big.Int, spids.Len())
-	for i, pid := range spids {
-		ids[i] = pid.KeyInt()
-	}
-	return ids
-}
+// default `i`
+
+// this key makes tests more deterministic
+
+func (spids SortedPartyIDs) Keys() []*big.Int { _ = "STUB: not implemented"; return nil }
 
 func (spids SortedPartyIDs) ToUnSorted() UnSortedPartyIDs {
-	return UnSortedPartyIDs(spids)
+	_ = "STUB: not implemented"
+	return *new(UnSortedPartyIDs)
 }
 
-func (spids SortedPartyIDs) FindByKey(key *big.Int) *PartyID {
-	for _, pid := range spids {
-		if pid.KeyInt().Cmp(key) == 0 {
-			return pid
-		}
-	}
-	return nil
-}
+func (spids SortedPartyIDs) FindByKey(key *big.Int) *PartyID { _ = "STUB: not implemented"; return nil }
 
 func (spids SortedPartyIDs) Exclude(exclude *PartyID) SortedPartyIDs {
-	newSpIDs := make(SortedPartyIDs, 0, len(spids))
-	for _, pid := range spids {
-		if pid.KeyInt().Cmp(exclude.KeyInt()) == 0 {
-			continue // exclude
-		}
-		newSpIDs = append(newSpIDs, pid)
-	}
-	return newSpIDs
+	_ = "STUB: not implemented"
+	return *new(SortedPartyIDs)
 }
+
+// exclude
 
 // Sortable
 
-func (spids SortedPartyIDs) Len() int {
-	return len(spids)
-}
+func (spids SortedPartyIDs) Len() int { _ = "STUB: not implemented"; return 0 }
 
-func (spids SortedPartyIDs) Less(a, b int) bool {
-	return spids[a].KeyInt().Cmp(spids[b].KeyInt()) <= 0
-}
+func (spids SortedPartyIDs) Less(a, b int) bool { _ = "STUB: not implemented"; return false }
 
-func (spids SortedPartyIDs) Swap(a, b int) {
-	spids[a], spids[b] = spids[b], spids[a]
-}
+func (spids SortedPartyIDs) Swap(a, b int) { _ = "STUB: not implemented"; return }

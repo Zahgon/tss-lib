@@ -13,10 +13,10 @@
 package resharing
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -26,7 +26,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//
 // The Round 1 data is broadcast to peers of the New Committee in this message.
 type DGRound1Message struct {
 	state         protoimpl.MessageState
@@ -38,60 +37,26 @@ type DGRound1Message struct {
 	VCommitment []byte `protobuf:"bytes,3,opt,name=v_commitment,json=vCommitment,proto3" json:"v_commitment,omitempty"`
 }
 
-func (x *DGRound1Message) Reset() {
-	*x = DGRound1Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_resharing_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *DGRound1Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DGRound1Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DGRound1Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DGRound1Message) ProtoMessage() {}
+func (*DGRound1Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DGRound1Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_resharing_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DGRound1Message.ProtoReflect.Descriptor instead.
-func (*DGRound1Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_resharing_proto_rawDescGZIP(), []int{0}
-}
+func (*DGRound1Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *DGRound1Message) GetEddsaPubX() []byte {
-	if x != nil {
-		return x.EddsaPubX
-	}
-	return nil
-}
+func (x *DGRound1Message) GetEddsaPubX() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *DGRound1Message) GetEddsaPubY() []byte {
-	if x != nil {
-		return x.EddsaPubY
-	}
-	return nil
-}
+func (x *DGRound1Message) GetEddsaPubY() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *DGRound1Message) GetVCommitment() []byte {
-	if x != nil {
-		return x.VCommitment
-	}
-	return nil
-}
+func (x *DGRound1Message) GetVCommitment() []byte { _ = "STUB: not implemented"; return nil }
 
-//
 // The Round 2 "ACK" is broadcast to peers of the Old Committee in this message.
 type DGRound2Message struct {
 	state         protoimpl.MessageState
@@ -99,39 +64,20 @@ type DGRound2Message struct {
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *DGRound2Message) Reset() {
-	*x = DGRound2Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_resharing_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *DGRound2Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DGRound2Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DGRound2Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DGRound2Message) ProtoMessage() {}
+func (*DGRound2Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DGRound2Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_resharing_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DGRound2Message.ProtoReflect.Descriptor instead.
-func (*DGRound2Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_resharing_proto_rawDescGZIP(), []int{1}
-}
+func (*DGRound2Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-//
 // The Round 3 data is sent to peers of the New Committee in this message.
 type DGRound3Message1 struct {
 	state         protoimpl.MessageState
@@ -141,46 +87,22 @@ type DGRound3Message1 struct {
 	Share []byte `protobuf:"bytes,1,opt,name=share,proto3" json:"share,omitempty"`
 }
 
-func (x *DGRound3Message1) Reset() {
-	*x = DGRound3Message1{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_resharing_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *DGRound3Message1) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DGRound3Message1) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DGRound3Message1) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DGRound3Message1) ProtoMessage() {}
+func (*DGRound3Message1) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DGRound3Message1) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_resharing_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DGRound3Message1.ProtoReflect.Descriptor instead.
-func (*DGRound3Message1) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_resharing_proto_rawDescGZIP(), []int{2}
-}
+func (*DGRound3Message1) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *DGRound3Message1) GetShare() []byte {
-	if x != nil {
-		return x.Share
-	}
-	return nil
-}
+func (x *DGRound3Message1) GetShare() []byte { _ = "STUB: not implemented"; return nil }
 
-//
 // The Round 3 data is broadcast to peers of the New Committee in this message.
 type DGRound3Message2 struct {
 	state         protoimpl.MessageState
@@ -190,46 +112,22 @@ type DGRound3Message2 struct {
 	VDecommitment [][]byte `protobuf:"bytes,1,rep,name=v_decommitment,json=vDecommitment,proto3" json:"v_decommitment,omitempty"`
 }
 
-func (x *DGRound3Message2) Reset() {
-	*x = DGRound3Message2{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_resharing_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *DGRound3Message2) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DGRound3Message2) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DGRound3Message2) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DGRound3Message2) ProtoMessage() {}
+func (*DGRound3Message2) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DGRound3Message2) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_resharing_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DGRound3Message2.ProtoReflect.Descriptor instead.
-func (*DGRound3Message2) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_resharing_proto_rawDescGZIP(), []int{3}
-}
+func (*DGRound3Message2) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *DGRound3Message2) GetVDecommitment() [][]byte {
-	if x != nil {
-		return x.VDecommitment
-	}
-	return nil
-}
+func (x *DGRound3Message2) GetVDecommitment() [][]byte { _ = "STUB: not implemented"; return nil }
 
-//
 // The Round 4 "ACK" is broadcast to peers of the Old and New Committees from the New Committee in this message.
 type DGRound4Message struct {
 	state         protoimpl.MessageState
@@ -237,37 +135,19 @@ type DGRound4Message struct {
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *DGRound4Message) Reset() {
-	*x = DGRound4Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_resharing_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *DGRound4Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *DGRound4Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *DGRound4Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*DGRound4Message) ProtoMessage() {}
+func (*DGRound4Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *DGRound4Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_resharing_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use DGRound4Message.ProtoReflect.Descriptor instead.
-func (*DGRound4Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_resharing_proto_rawDescGZIP(), []int{4}
-}
+func (*DGRound4Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
 var File_protob_eddsa_resharing_proto protoreflect.FileDescriptor
 
@@ -301,12 +181,7 @@ var (
 	file_protob_eddsa_resharing_proto_rawDescData = file_protob_eddsa_resharing_proto_rawDesc
 )
 
-func file_protob_eddsa_resharing_proto_rawDescGZIP() []byte {
-	file_protob_eddsa_resharing_proto_rawDescOnce.Do(func() {
-		file_protob_eddsa_resharing_proto_rawDescData = protoimpl.X.CompressGZIP(file_protob_eddsa_resharing_proto_rawDescData)
-	})
-	return file_protob_eddsa_resharing_proto_rawDescData
-}
+func file_protob_eddsa_resharing_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_protob_eddsa_resharing_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_protob_eddsa_resharing_proto_goTypes = []interface{}{
@@ -324,89 +199,5 @@ var file_protob_eddsa_resharing_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_protob_eddsa_resharing_proto_init() }
-func file_protob_eddsa_resharing_proto_init() {
-	if File_protob_eddsa_resharing_proto != nil {
-		return
-	}
-	if !protoimpl.UnsafeEnabled {
-		file_protob_eddsa_resharing_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DGRound1Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_resharing_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DGRound2Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_resharing_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DGRound3Message1); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_resharing_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DGRound3Message2); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_resharing_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DGRound4Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_protob_eddsa_resharing_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   5,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_protob_eddsa_resharing_proto_goTypes,
-		DependencyIndexes: file_protob_eddsa_resharing_proto_depIdxs,
-		MessageInfos:      file_protob_eddsa_resharing_proto_msgTypes,
-	}.Build()
-	File_protob_eddsa_resharing_proto = out.File
-	file_protob_eddsa_resharing_proto_rawDesc = nil
-	file_protob_eddsa_resharing_proto_goTypes = nil
-	file_protob_eddsa_resharing_proto_depIdxs = nil
-}
+func init()                                   { file_protob_eddsa_resharing_proto_init() }
+func file_protob_eddsa_resharing_proto_init() { _ = "STUB: not implemented"; return }

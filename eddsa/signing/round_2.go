@@ -7,69 +7,19 @@
 package signing
 
 import (
-	"errors"
-	"math/big"
-
-	errors2 "github.com/pkg/errors"
-
-	"github.com/bnb-chain/tss-lib/v3/crypto/schnorr"
 	"github.com/bnb-chain/tss-lib/v3/tss"
 )
 
-func (round *round2) Start() *tss.Error {
-	if round.started {
-		return round.WrapError(errors.New("round already started"))
-	}
-	round.number = 2
-	round.started = true
-	round.resetOK()
+func (round *round2) Start() *tss.Error { _ = "STUB: not implemented"; return nil }
 
-	i := round.PartyID().Index
+// 1. store r1 message pieces
 
-	// 1. store r1 message pieces
-	for j, msg := range round.temp.signRound1Messages {
-		r1msg := msg.Content().(*SignRound1Message)
-		round.temp.cjs[j] = r1msg.UnmarshalCommitment()
-	}
+// 2. compute Schnorr prove
 
-	// 2. compute Schnorr prove
-	ContextI := append(round.temp.ssid, new(big.Int).SetUint64(uint64(i)).Bytes()...)
-	pir, err := schnorr.NewZKProof(ContextI, round.temp.ri, round.temp.pointRi, round.Rand())
-	if err != nil {
-		return round.WrapError(errors2.Wrapf(err, "NewZKProof(ri, pointRi)"))
-	}
+// 3. BROADCAST de-commitments of Shamir poly*G and Schnorr prove
 
-	// 3. BROADCAST de-commitments of Shamir poly*G and Schnorr prove
-	r2msg2 := NewSignRound2Message(round.PartyID(), round.temp.deCommit, pir)
-	round.temp.signRound2Messages[i] = r2msg2
-	round.out <- r2msg2
+func (round *round2) CanAccept(msg tss.ParsedMessage) bool { _ = "STUB: not implemented"; return false }
 
-	return nil
-}
+func (round *round2) Update() (bool, *tss.Error) { _ = "STUB: not implemented"; return false, nil }
 
-func (round *round2) CanAccept(msg tss.ParsedMessage) bool {
-	if _, ok := msg.Content().(*SignRound2Message); ok {
-		return msg.IsBroadcast()
-	}
-	return false
-}
-
-func (round *round2) Update() (bool, *tss.Error) {
-	ret := true
-	for j, msg := range round.temp.signRound2Messages {
-		if round.ok[j] {
-			continue
-		}
-		if msg == nil || !round.CanAccept(msg) {
-			ret = false
-			continue
-		}
-		round.ok[j] = true
-	}
-	return ret, nil
-}
-
-func (round *round2) NextRound() tss.Round {
-	round.started = false
-	return &round3{round}
-}
+func (round *round2) NextRound() tss.Round { _ = "STUB: not implemented"; return *new(tss.Round) }

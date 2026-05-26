@@ -12,14 +12,11 @@ type (
 	}
 )
 
-func NewPeerContext(parties SortedPartyIDs) *PeerContext {
-	return &PeerContext{partyIDs: parties}
-}
+func NewPeerContext(parties SortedPartyIDs) *PeerContext { _ = "STUB: not implemented"; return nil }
 
 func (p2pCtx *PeerContext) IDs() SortedPartyIDs {
-	return p2pCtx.partyIDs
+	_ = "STUB: not implemented"
+	return *new(SortedPartyIDs)
 }
 
-func (p2pCtx *PeerContext) SetIDs(ids SortedPartyIDs) {
-	p2pCtx.partyIDs = ids
-}
+func (p2pCtx *PeerContext) SetIDs(ids SortedPartyIDs) { _ = "STUB: not implemented"; return }

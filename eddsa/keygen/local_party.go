@@ -7,11 +7,9 @@
 package keygen
 
 import (
-	"errors"
 	"fmt"
 	"math/big"
 
-	"github.com/bnb-chain/tss-lib/v3/common"
 	cmt "github.com/bnb-chain/tss-lib/v3/crypto/commitments"
 	"github.com/bnb-chain/tss-lib/v3/crypto/vss"
 	"github.com/bnb-chain/tss-lib/v3/tss"
@@ -63,102 +61,52 @@ func NewLocalParty(
 	out chan<- tss.Message,
 	end chan<- *LocalPartySaveData,
 ) tss.Party {
-	partyCount := params.PartyCount()
-	data := NewLocalPartySaveData(partyCount)
-	p := &LocalParty{
-		BaseParty: new(tss.BaseParty),
-		params:    params,
-		temp:      localTempData{},
-		data:      data,
-		out:       out,
-		end:       end,
-	}
-	// msgs init
-	p.temp.kgRound1Messages = make([]tss.ParsedMessage, partyCount)
-	p.temp.kgRound2Message1s = make([]tss.ParsedMessage, partyCount)
-	p.temp.kgRound2Message2s = make([]tss.ParsedMessage, partyCount)
-	p.temp.kgRound3Messages = make([]tss.ParsedMessage, partyCount)
-	// temp data init
-	p.temp.KGCs = make([]cmt.HashCommitment, partyCount)
-	return p
+	_ = "STUB: not implemented"
+	return *new(tss.Party)
 }
 
-func (p *LocalParty) FirstRound() tss.Round {
-	return newRound1(p.params, &p.data, &p.temp, p.out, p.end)
-}
+// msgs init
 
-func (p *LocalParty) Start() *tss.Error {
-	return tss.BaseStart(p, TaskName)
-}
+// temp data init
+
+func (p *LocalParty) FirstRound() tss.Round { _ = "STUB: not implemented"; return *new(tss.Round) }
+
+func (p *LocalParty) Start() *tss.Error { _ = "STUB: not implemented"; return nil }
 
 func (p *LocalParty) Update(msg tss.ParsedMessage) (ok bool, err *tss.Error) {
-	return tss.BaseUpdate(p, msg, TaskName)
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 func (p *LocalParty) UpdateFromBytes(wireBytes []byte, from *tss.PartyID, isBroadcast bool) (bool, *tss.Error) {
-	msg, err := tss.ParseWireMessage(wireBytes, from, isBroadcast)
-	if err != nil {
-		return false, p.WrapError(err)
-	}
-	return p.Update(msg)
+	_ = "STUB: not implemented"
+	return false, nil
 }
 
 func (p *LocalParty) ValidateMessage(msg tss.ParsedMessage) (bool, *tss.Error) {
-	if ok, err := p.BaseParty.ValidateMessage(msg); !ok || err != nil {
-		return ok, err
-	}
-	// check that the message's "from index" will fit into the array
-	if maxFromIdx := p.params.PartyCount() - 1; maxFromIdx < msg.GetFrom().Index {
-		return false, p.WrapError(fmt.Errorf("received msg with a sender index too great (%d <= %d)",
-			p.params.PartyCount(), msg.GetFrom().Index), msg.GetFrom())
-	}
-	return true, nil
+	_ = "STUB: not implemented"
+	return false, nil
 }
+
+// check that the message's "from index" will fit into the array
 
 func (p *LocalParty) StoreMessage(msg tss.ParsedMessage) (bool, *tss.Error) {
+	_ = "STUB: not implemented"
 	// ValidateBasic is cheap; double-check the message here in case the public StoreMessage was called externally
-	if ok, err := p.ValidateMessage(msg); !ok || err != nil {
-		return ok, err
-	}
-	fromPIdx := msg.GetFrom().Index
-
-	// switch/case is necessary to store any messages beyond current round
-	// this does not handle message replays. we expect the caller to apply replay and spoofing protection.
-	switch msg.Content().(type) {
-	case *KGRound1Message:
-		p.temp.kgRound1Messages[fromPIdx] = msg
-	case *KGRound2Message1:
-		p.temp.kgRound2Message1s[fromPIdx] = msg
-	case *KGRound2Message2:
-		p.temp.kgRound2Message2s[fromPIdx] = msg
-	default: // unrecognised message, just ignore!
-		common.Logger.Warningf("unrecognised message ignored: %v", msg)
-		return false, nil
-	}
-	return true, nil
+	return false, nil
 }
+
+// switch/case is necessary to store any messages beyond current round
+// this does not handle message replays. we expect the caller to apply replay and spoofing protection.
+
+// unrecognised message, just ignore!
 
 // recovers a party's original index in the set of parties during keygen
 func (save LocalPartySaveData) OriginalIndex() (int, error) {
-	index := -1
-	ki := save.ShareID
-	for j, kj := range save.Ks {
-		if kj.Cmp(ki) != 0 {
-			continue
-		}
-		index = j
-		break
-	}
-	if index < 0 {
-		return -1, errors.New("a party index could not be recovered from Ks")
-	}
-	return index, nil
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
-func (p *LocalParty) PartyID() *tss.PartyID {
-	return p.params.PartyID()
-}
+func (p *LocalParty) PartyID() *tss.PartyID { _ = "STUB: not implemented"; return nil }
 
-func (p *LocalParty) String() string {
-	return fmt.Sprintf("id: %s, %s", p.PartyID(), p.BaseParty.String())
-}
+func (p *LocalParty) String() string { _ = "STUB: not implemented"; return "" }

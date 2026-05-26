@@ -13,11 +13,11 @@
 package tss
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -27,7 +27,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//
 // Wrapper for TSS messages, often read by the transport layer and not itself sent over the wire
 type MessageWrapper struct {
 	state         protoimpl.MessageState
@@ -50,79 +49,31 @@ type MessageWrapper struct {
 	Message *anypb.Any `protobuf:"bytes,10,opt,name=message,proto3" json:"message,omitempty"`
 }
 
-func (x *MessageWrapper) Reset() {
-	*x = MessageWrapper{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_message_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *MessageWrapper) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *MessageWrapper) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *MessageWrapper) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*MessageWrapper) ProtoMessage() {}
+func (*MessageWrapper) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *MessageWrapper) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_message_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use MessageWrapper.ProtoReflect.Descriptor instead.
-func (*MessageWrapper) Descriptor() ([]byte, []int) {
-	return file_protob_message_proto_rawDescGZIP(), []int{0}
-}
+func (*MessageWrapper) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *MessageWrapper) GetIsBroadcast() bool {
-	if x != nil {
-		return x.IsBroadcast
-	}
-	return false
-}
+func (x *MessageWrapper) GetIsBroadcast() bool { _ = "STUB: not implemented"; return false }
 
-func (x *MessageWrapper) GetIsToOldCommittee() bool {
-	if x != nil {
-		return x.IsToOldCommittee
-	}
-	return false
-}
+func (x *MessageWrapper) GetIsToOldCommittee() bool { _ = "STUB: not implemented"; return false }
 
-func (x *MessageWrapper) GetIsToOldAndNewCommittees() bool {
-	if x != nil {
-		return x.IsToOldAndNewCommittees
-	}
-	return false
-}
+func (x *MessageWrapper) GetIsToOldAndNewCommittees() bool { _ = "STUB: not implemented"; return false }
 
-func (x *MessageWrapper) GetFrom() *MessageWrapper_PartyID {
-	if x != nil {
-		return x.From
-	}
-	return nil
-}
+func (x *MessageWrapper) GetFrom() *MessageWrapper_PartyID { _ = "STUB: not implemented"; return nil }
 
-func (x *MessageWrapper) GetTo() []*MessageWrapper_PartyID {
-	if x != nil {
-		return x.To
-	}
-	return nil
-}
+func (x *MessageWrapper) GetTo() []*MessageWrapper_PartyID { _ = "STUB: not implemented"; return nil }
 
-func (x *MessageWrapper) GetMessage() *anypb.Any {
-	if x != nil {
-		return x.Message
-	}
-	return nil
-}
+func (x *MessageWrapper) GetMessage() *anypb.Any { _ = "STUB: not implemented"; return nil }
 
 // PartyID represents a participant in the TSS protocol rounds.
 // Note: The `id` and `moniker` are provided for convenience to allow you to track participants easier.
@@ -137,58 +88,28 @@ type MessageWrapper_PartyID struct {
 	Key     []byte `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
 }
 
-func (x *MessageWrapper_PartyID) Reset() {
-	*x = MessageWrapper_PartyID{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_message_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *MessageWrapper_PartyID) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *MessageWrapper_PartyID) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *MessageWrapper_PartyID) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*MessageWrapper_PartyID) ProtoMessage() {}
+func (*MessageWrapper_PartyID) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *MessageWrapper_PartyID) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_message_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use MessageWrapper_PartyID.ProtoReflect.Descriptor instead.
 func (*MessageWrapper_PartyID) Descriptor() ([]byte, []int) {
-	return file_protob_message_proto_rawDescGZIP(), []int{0, 0}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func (x *MessageWrapper_PartyID) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
+func (x *MessageWrapper_PartyID) GetId() string { _ = "STUB: not implemented"; return "" }
 
-func (x *MessageWrapper_PartyID) GetMoniker() string {
-	if x != nil {
-		return x.Moniker
-	}
-	return ""
-}
+func (x *MessageWrapper_PartyID) GetMoniker() string { _ = "STUB: not implemented"; return "" }
 
-func (x *MessageWrapper_PartyID) GetKey() []byte {
-	if x != nil {
-		return x.Key
-	}
-	return nil
-}
+func (x *MessageWrapper_PartyID) GetKey() []byte { _ = "STUB: not implemented"; return nil }
 
 var File_protob_message_proto protoreflect.FileDescriptor
 
@@ -231,12 +152,7 @@ var (
 	file_protob_message_proto_rawDescData = file_protob_message_proto_rawDesc
 )
 
-func file_protob_message_proto_rawDescGZIP() []byte {
-	file_protob_message_proto_rawDescOnce.Do(func() {
-		file_protob_message_proto_rawDescData = protoimpl.X.CompressGZIP(file_protob_message_proto_rawDescData)
-	})
-	return file_protob_message_proto_rawDescData
-}
+func file_protob_message_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_protob_message_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_protob_message_proto_goTypes = []interface{}{
@@ -255,53 +171,5 @@ var file_protob_message_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_protob_message_proto_init() }
-func file_protob_message_proto_init() {
-	if File_protob_message_proto != nil {
-		return
-	}
-	if !protoimpl.UnsafeEnabled {
-		file_protob_message_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MessageWrapper); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_message_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MessageWrapper_PartyID); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_protob_message_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   2,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_protob_message_proto_goTypes,
-		DependencyIndexes: file_protob_message_proto_depIdxs,
-		MessageInfos:      file_protob_message_proto_msgTypes,
-	}.Build()
-	File_protob_message_proto = out.File
-	file_protob_message_proto_rawDesc = nil
-	file_protob_message_proto_goTypes = nil
-	file_protob_message_proto_depIdxs = nil
-}
+func init()                           { file_protob_message_proto_init() }
+func file_protob_message_proto_init() { _ = "STUB: not implemented"; return }

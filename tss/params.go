@@ -8,10 +8,8 @@ package tss
 
 import (
 	"crypto/elliptic"
-	"crypto/rand"
 	"io"
 	"math/big"
-	"runtime"
 	"time"
 )
 
@@ -51,159 +49,103 @@ const (
 
 // Exported, used in `tss` client
 func NewParameters(ec elliptic.Curve, ctx *PeerContext, partyID *PartyID, partyCount, threshold int) *Parameters {
-	return &Parameters{
-		ec:                  ec,
-		parties:             ctx,
-		partyID:             partyID,
-		partyCount:          partyCount,
-		threshold:           threshold,
-		concurrency:         runtime.GOMAXPROCS(0),
-		safePrimeGenTimeout: defaultSafePrimeGenTimeout,
-		partialKeyRand:      rand.Reader,
-		rand:                rand.Reader,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (params *Parameters) EC() elliptic.Curve {
-	return params.ec
+	_ = "STUB: not implemented"
+	return *new(elliptic.Curve)
 }
 
-func (params *Parameters) Parties() *PeerContext {
-	return params.parties
-}
+func (params *Parameters) Parties() *PeerContext { _ = "STUB: not implemented"; return nil }
 
-func (params *Parameters) PartyID() *PartyID {
-	return params.partyID
-}
+func (params *Parameters) PartyID() *PartyID { _ = "STUB: not implemented"; return nil }
 
-func (params *Parameters) PartyCount() int {
-	return params.partyCount
-}
+func (params *Parameters) PartyCount() int { _ = "STUB: not implemented"; return 0 }
 
-func (params *Parameters) Threshold() int {
-	return params.threshold
-}
+func (params *Parameters) Threshold() int { _ = "STUB: not implemented"; return 0 }
 
-func (params *Parameters) Concurrency() int {
-	return params.concurrency
-}
+func (params *Parameters) Concurrency() int { _ = "STUB: not implemented"; return 0 }
 
 func (params *Parameters) SafePrimeGenTimeout() time.Duration {
-	return params.safePrimeGenTimeout
+	_ = "STUB: not implemented"
+	return *new(time.Duration)
 }
 
 // The concurrency level must be >= 1.
-func (params *Parameters) SetConcurrency(concurrency int) {
-	params.concurrency = concurrency
-}
+func (params *Parameters) SetConcurrency(concurrency int) { _ = "STUB: not implemented"; return }
 
 func (params *Parameters) SetSafePrimeGenTimeout(timeout time.Duration) {
-	params.safePrimeGenTimeout = timeout
+	_ = "STUB: not implemented"
+	return
 }
 
-func (params *Parameters) NoProofMod() bool {
-	return params.noProofMod
-}
+func (params *Parameters) NoProofMod() bool { _ = "STUB: not implemented"; return false }
 
-func (params *Parameters) NoProofFac() bool {
-	return params.noProofFac
-}
+func (params *Parameters) NoProofFac() bool { _ = "STUB: not implemented"; return false }
 
-func (params *Parameters) SetNoProofMod() {
-	params.noProofMod = true
-}
+func (params *Parameters) SetNoProofMod() { _ = "STUB: not implemented"; return }
 
-func (params *Parameters) SetNoProofFac() {
-	params.noProofFac = true
-}
+func (params *Parameters) SetNoProofFac() { _ = "STUB: not implemented"; return }
 
 func (params *Parameters) PartialKeyRand() io.Reader {
-	return params.partialKeyRand
+	_ = "STUB: not implemented"
+	return *new(io.Reader)
 }
 
-func (params *Parameters) Rand() io.Reader {
-	return params.rand
-}
+func (params *Parameters) Rand() io.Reader { _ = "STUB: not implemented"; return *new(io.Reader) }
 
-func (params *Parameters) SetPartialKeyRand(rand io.Reader) {
-	params.partialKeyRand = rand
-}
+func (params *Parameters) SetPartialKeyRand(rand io.Reader) { _ = "STUB: not implemented"; return }
 
 func (params *Parameters) SetRand(rand io.Reader) {
-	params.rand = rand
+	_ = "STUB: not implemented"
+
+	// SessionNonce returns the per-session nonce for SSID uniqueness.
+	// Returns nil if not set.
+	return
 }
 
-// SessionNonce returns the per-session nonce for SSID uniqueness.
-// Returns nil if not set.
-func (params *Parameters) SessionNonce() *big.Int {
-	return params.sessionNonce
-}
+func (params *Parameters) SessionNonce() *big.Int { _ = "STUB: not implemented"; return nil }
 
 // SetSessionNonce sets a per-session nonce that all parties must agree on.
 // This value is mixed into the SSID to provide GG20 session binding, preventing
 // cross-session proof replay attacks. All parties in the same session MUST use
 // the same nonce value. The caller is responsible for coordinating this.
-func (params *Parameters) SetSessionNonce(nonce *big.Int) {
-	params.sessionNonce = nonce
-}
+func (params *Parameters) SetSessionNonce(nonce *big.Int) { _ = "STUB: not implemented"; return }
 
 // ----- //
 
 // Exported, used in `tss` client
 func NewReSharingParameters(ec elliptic.Curve, ctx, newCtx *PeerContext, partyID *PartyID, partyCount, threshold, newPartyCount, newThreshold int) *ReSharingParameters {
-	params := NewParameters(ec, ctx, partyID, partyCount, threshold)
-	return &ReSharingParameters{
-		Parameters:    params,
-		newParties:    newCtx,
-		newPartyCount: newPartyCount,
-		newThreshold:  newThreshold,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (rgParams *ReSharingParameters) OldParties() *PeerContext {
-	return rgParams.Parties() // wr use the original method for old parties
+	_ = "STUB: not implemented"
+	return nil
+	// wr use the original method for old parties
 }
 
-func (rgParams *ReSharingParameters) OldPartyCount() int {
-	return rgParams.partyCount
-}
+func (rgParams *ReSharingParameters) OldPartyCount() int { _ = "STUB: not implemented"; return 0 }
 
 func (rgParams *ReSharingParameters) NewParties() *PeerContext {
-	return rgParams.newParties
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (rgParams *ReSharingParameters) NewPartyCount() int {
-	return rgParams.newPartyCount
-}
+func (rgParams *ReSharingParameters) NewPartyCount() int { _ = "STUB: not implemented"; return 0 }
 
-func (rgParams *ReSharingParameters) NewThreshold() int {
-	return rgParams.newThreshold
-}
+func (rgParams *ReSharingParameters) NewThreshold() int { _ = "STUB: not implemented"; return 0 }
 
 func (rgParams *ReSharingParameters) OldAndNewParties() []*PartyID {
-	return append(rgParams.OldParties().IDs(), rgParams.NewParties().IDs()...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (rgParams *ReSharingParameters) OldAndNewPartyCount() int {
-	return rgParams.OldPartyCount() + rgParams.NewPartyCount()
-}
+func (rgParams *ReSharingParameters) OldAndNewPartyCount() int { _ = "STUB: not implemented"; return 0 }
 
-func (rgParams *ReSharingParameters) IsOldCommittee() bool {
-	partyID := rgParams.partyID
-	for _, Pj := range rgParams.parties.IDs() {
-		if partyID.KeyInt().Cmp(Pj.KeyInt()) == 0 {
-			return true
-		}
-	}
-	return false
-}
+func (rgParams *ReSharingParameters) IsOldCommittee() bool { _ = "STUB: not implemented"; return false }
 
-func (rgParams *ReSharingParameters) IsNewCommittee() bool {
-	partyID := rgParams.partyID
-	for _, Pj := range rgParams.newParties.IDs() {
-		if partyID.KeyInt().Cmp(Pj.KeyInt()) == 0 {
-			return true
-		}
-	}
-	return false
-}
+func (rgParams *ReSharingParameters) IsNewCommittee() bool { _ = "STUB: not implemented"; return false }

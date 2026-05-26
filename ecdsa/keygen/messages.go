@@ -7,11 +7,11 @@
 package keygen
 
 import (
-	"github.com/bnb-chain/tss-lib/v3/crypto/facproof"
-	"github.com/bnb-chain/tss-lib/v3/crypto/modproof"
 	"math/big"
 
-	"github.com/bnb-chain/tss-lib/v3/common"
+	"github.com/bnb-chain/tss-lib/v3/crypto/facproof"
+	"github.com/bnb-chain/tss-lib/v3/crypto/modproof"
+
 	cmt "github.com/bnb-chain/tss-lib/v3/crypto/commitments"
 	"github.com/bnb-chain/tss-lib/v3/crypto/dlnproof"
 	"github.com/bnb-chain/tss-lib/v3/crypto/paillier"
@@ -41,69 +41,35 @@ func NewKGRound1Message(
 	nTildeI, h1I, h2I *big.Int,
 	dlnProof1, dlnProof2 *dlnproof.Proof,
 ) (tss.ParsedMessage, error) {
-	meta := tss.MessageRouting{
-		From:        from,
-		IsBroadcast: true,
-	}
-	dlnProof1Bz, err := dlnProof1.Serialize()
-	if err != nil {
-		return nil, err
-	}
-	dlnProof2Bz, err := dlnProof2.Serialize()
-	if err != nil {
-		return nil, err
-	}
-	content := &KGRound1Message{
-		Commitment: ct.Bytes(),
-		PaillierN:  paillierPK.N.Bytes(),
-		NTilde:     nTildeI.Bytes(),
-		H1:         h1I.Bytes(),
-		H2:         h2I.Bytes(),
-		Dlnproof_1: dlnProof1Bz,
-		Dlnproof_2: dlnProof2Bz,
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg), nil
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage), nil
 }
 
-func (m *KGRound1Message) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyBytes(m.GetCommitment()) &&
-		common.NonEmptyBytes(m.GetPaillierN()) &&
-		common.NonEmptyBytes(m.GetNTilde()) &&
-		common.NonEmptyBytes(m.GetH1()) &&
-		common.NonEmptyBytes(m.GetH2()) &&
-		// expected len of dln proof = sizeof(int64) + len(alpha) + len(t)
-		common.NonEmptyMultiBytes(m.GetDlnproof_1(), 2+(dlnproof.Iterations*2)) &&
-		common.NonEmptyMultiBytes(m.GetDlnproof_2(), 2+(dlnproof.Iterations*2))
-}
+func (m *KGRound1Message) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
-func (m *KGRound1Message) UnmarshalCommitment() *big.Int {
-	return new(big.Int).SetBytes(m.GetCommitment())
-}
+// expected len of dln proof = sizeof(int64) + len(alpha) + len(t)
+
+func (m *KGRound1Message) UnmarshalCommitment() *big.Int { _ = "STUB: not implemented"; return nil }
 
 func (m *KGRound1Message) UnmarshalPaillierPK() *paillier.PublicKey {
-	return &paillier.PublicKey{N: new(big.Int).SetBytes(m.GetPaillierN())}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (m *KGRound1Message) UnmarshalNTilde() *big.Int {
-	return new(big.Int).SetBytes(m.GetNTilde())
-}
+func (m *KGRound1Message) UnmarshalNTilde() *big.Int { _ = "STUB: not implemented"; return nil }
 
-func (m *KGRound1Message) UnmarshalH1() *big.Int {
-	return new(big.Int).SetBytes(m.GetH1())
-}
+func (m *KGRound1Message) UnmarshalH1() *big.Int { _ = "STUB: not implemented"; return nil }
 
-func (m *KGRound1Message) UnmarshalH2() *big.Int {
-	return new(big.Int).SetBytes(m.GetH2())
-}
+func (m *KGRound1Message) UnmarshalH2() *big.Int { _ = "STUB: not implemented"; return nil }
 
 func (m *KGRound1Message) UnmarshalDLNProof1() (*dlnproof.Proof, error) {
-	return dlnproof.UnmarshalDLNProof(m.GetDlnproof_1())
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (m *KGRound1Message) UnmarshalDLNProof2() (*dlnproof.Proof, error) {
-	return dlnproof.UnmarshalDLNProof(m.GetDlnproof_2())
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ----- //
@@ -113,33 +79,20 @@ func NewKGRound2Message1(
 	share *vss.Share,
 	proof *facproof.ProofFac,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		To:          []*tss.PartyID{to},
-		IsBroadcast: false,
-	}
-	proofBzs := proof.Bytes()
-	content := &KGRound2Message1{
-		Share:    share.Share.Bytes(),
-		FacProof: proofBzs[:],
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound2Message1) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyBytes(m.GetShare())
-	// This is commented for backward compatibility, which msg has no proof
-	// && common.NonEmptyMultiBytes(m.GetFacProof(), facproof.ProofFacBytesParts)
-}
+func (m *KGRound2Message1) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
-func (m *KGRound2Message1) UnmarshalShare() *big.Int {
-	return new(big.Int).SetBytes(m.Share)
-}
+// This is commented for backward compatibility, which msg has no proof
+// && common.NonEmptyMultiBytes(m.GetFacProof(), facproof.ProofFacBytesParts)
+
+func (m *KGRound2Message1) UnmarshalShare() *big.Int { _ = "STUB: not implemented"; return nil }
 
 func (m *KGRound2Message1) UnmarshalFacProof() (*facproof.ProofFac, error) {
-	return facproof.NewProofFromBytes(m.GetFacProof())
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ----- //
@@ -149,34 +102,23 @@ func NewKGRound2Message2(
 	deCommitment cmt.HashDeCommitment,
 	proof *modproof.ProofMod,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		IsBroadcast: true,
-	}
-	dcBzs := common.BigIntsToBytes(deCommitment)
-	proofBzs := proof.Bytes()
-	content := &KGRound2Message2{
-		DeCommitment: dcBzs,
-		ModProof:     proofBzs[:],
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound2Message2) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyMultiBytes(m.GetDeCommitment())
-	// This is commented for backward compatibility, which msg has no proof
-	// && common.NonEmptyMultiBytes(m.GetModProof(), modproof.ProofModBytesParts)
-}
+func (m *KGRound2Message2) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
+
+// This is commented for backward compatibility, which msg has no proof
+// && common.NonEmptyMultiBytes(m.GetModProof(), modproof.ProofModBytesParts)
 
 func (m *KGRound2Message2) UnmarshalDeCommitment() []*big.Int {
-	deComBzs := m.GetDeCommitment()
-	return cmt.NewHashDeCommitmentFromBytes(deComBzs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (m *KGRound2Message2) UnmarshalModProof() (*modproof.ProofMod, error) {
-	return modproof.NewProofFromBytes(m.GetModProof())
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // ----- //
@@ -185,34 +127,13 @@ func NewKGRound3Message(
 	from *tss.PartyID,
 	proof paillier.Proof,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		IsBroadcast: true,
-	}
-	pfBzs := make([][]byte, len(proof))
-	for i := range pfBzs {
-		if proof[i] == nil {
-			continue
-		}
-		pfBzs[i] = proof[i].Bytes()
-	}
-	content := &KGRound3Message{
-		PaillierProof: pfBzs,
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound3Message) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyMultiBytes(m.GetPaillierProof(), paillier.ProofIters)
-}
+func (m *KGRound3Message) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 func (m *KGRound3Message) UnmarshalProofInts() paillier.Proof {
-	var pf paillier.Proof
-	proofBzs := m.GetPaillierProof()
-	for i := range pf {
-		pf[i] = new(big.Int).SetBytes(proofBzs[i])
-	}
-	return pf
+	_ = "STUB: not implemented"
+	return *new(paillier.Proof)
 }

@@ -10,55 +10,21 @@ import (
 	"math/big"
 )
 
-func BigIntsToBytes(bigInts []*big.Int) [][]byte {
-	bzs := make([][]byte, len(bigInts))
-	for i := range bzs {
-		if bigInts[i] == nil {
-			continue
-		}
-		bzs[i] = bigInts[i].Bytes()
-	}
-	return bzs
-}
+func BigIntsToBytes(bigInts []*big.Int) [][]byte { _ = "STUB: not implemented"; return nil }
 
-func MultiBytesToBigInts(bytes [][]byte) []*big.Int {
-	ints := make([]*big.Int, len(bytes))
-	for i := range ints {
-		ints[i] = new(big.Int).SetBytes(bytes[i])
-	}
-	return ints
-}
+func MultiBytesToBigInts(bytes [][]byte) []*big.Int { _ = "STUB: not implemented"; return nil }
 
 // Returns true when the byte slice is non-nil and non-empty
-func NonEmptyBytes(bz []byte) bool {
-	return bz != nil && 0 < len(bz)
-}
+func NonEmptyBytes(bz []byte) bool { _ = "STUB: not implemented"; return false }
 
 // Returns true when all of the slices in the multi-dimensional byte slice are non-nil and non-empty
 func NonEmptyMultiBytes(bzs [][]byte, expectLen ...int) bool {
-	if len(bzs) == 0 {
-		return false
-	}
-	// variadic (optional) arg test
-	if 0 < len(expectLen) && expectLen[0] != len(bzs) {
-		return false
-	}
-	for _, bz := range bzs {
-		if !NonEmptyBytes(bz) {
-			return false
-		}
-	}
-	return true
+	_ = "STUB: not implemented"
+	return false
 }
+
+// variadic (optional) arg test
 
 // PadToLengthBytesInPlace pad {0, ...} to the front of src if len(src) < length
 // output length is equal to the parameter length
-func PadToLengthBytesInPlace(src []byte, length int) []byte {
-	oriLen := len(src)
-	if oriLen < length {
-		for i := 0; i < length-oriLen; i++ {
-			src = append([]byte{0}, src...)
-		}
-	}
-	return src
-}
+func PadToLengthBytesInPlace(src []byte, length int) []byte { _ = "STUB: not implemented"; return nil }

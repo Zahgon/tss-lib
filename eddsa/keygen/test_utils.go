@@ -7,16 +7,6 @@
 package keygen
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"math/rand"
-	"path/filepath"
-	"runtime"
-	"sort"
-
-	"github.com/pkg/errors"
-
 	"github.com/bnb-chain/tss-lib/v3/test"
 	"github.com/bnb-chain/tss-lib/v3/tss"
 )
@@ -33,85 +23,13 @@ const (
 )
 
 func LoadKeygenTestFixtures(qty int, optionalStart ...int) ([]LocalPartySaveData, tss.SortedPartyIDs, error) {
-	keys := make([]LocalPartySaveData, 0, qty)
-	start := 0
-	if 0 < len(optionalStart) {
-		start = optionalStart[0]
-	}
-	for i := start; i < qty; i++ {
-		fixtureFilePath := makeTestFixtureFilePath(i)
-		bz, err := ioutil.ReadFile(fixtureFilePath)
-		if err != nil {
-			return nil, nil, errors.Wrapf(err,
-				"could not open the test fixture for party %d in the expected location: %s. run keygen tests first.",
-				i, fixtureFilePath)
-		}
-		var key LocalPartySaveData
-		if err = json.Unmarshal(bz, &key); err != nil {
-			return nil, nil, errors.Wrapf(err,
-				"could not unmarshal fixture data for party %d located at: %s",
-				i, fixtureFilePath)
-		}
-		for _, kbxj := range key.BigXj {
-			kbxj.SetCurve(tss.Edwards())
-		}
-		key.EDDSAPub.SetCurve(tss.Edwards())
-		keys = append(keys, key)
-	}
-	partyIDs := make(tss.UnSortedPartyIDs, len(keys))
-	for i, key := range keys {
-		pMoniker := fmt.Sprintf("%d", i+start+1)
-		partyIDs[i] = tss.NewPartyID(pMoniker, pMoniker, key.ShareID)
-	}
-	sortedPIDs := tss.SortPartyIDs(partyIDs)
-	return keys, sortedPIDs, nil
+	_ = "STUB: not implemented"
+	return nil, *new(tss.SortedPartyIDs), nil
 }
 
 func LoadKeygenTestFixturesRandomSet(qty, fixtureCount int) ([]LocalPartySaveData, tss.SortedPartyIDs, error) {
-	keys := make([]LocalPartySaveData, 0, qty)
-	plucked := make(map[int]interface{}, qty)
-	for i := 0; len(plucked) < qty; i = (i + 1) % fixtureCount {
-		_, have := plucked[i]
-		if pluck := rand.Float32() < 0.5; !have && pluck {
-			plucked[i] = new(struct{})
-		}
-	}
-	for i := range plucked {
-		fixtureFilePath := makeTestFixtureFilePath(i)
-		bz, err := ioutil.ReadFile(fixtureFilePath)
-		if err != nil {
-			return nil, nil, errors.Wrapf(err,
-				"could not open the test fixture for party %d in the expected location: %s. run keygen tests first.",
-				i, fixtureFilePath)
-		}
-		var key LocalPartySaveData
-		if err = json.Unmarshal(bz, &key); err != nil {
-			return nil, nil, errors.Wrapf(err,
-				"could not unmarshal fixture data for party %d located at: %s",
-				i, fixtureFilePath)
-		}
-		for _, kbxj := range key.BigXj {
-			kbxj.SetCurve(tss.Edwards())
-		}
-		key.EDDSAPub.SetCurve(tss.Edwards())
-		keys = append(keys, key)
-	}
-	partyIDs := make(tss.UnSortedPartyIDs, len(keys))
-	j := 0
-	for i := range plucked {
-		key := keys[j]
-		pMoniker := fmt.Sprintf("%d", i+1)
-		partyIDs[j] = tss.NewPartyID(pMoniker, pMoniker, key.ShareID)
-		j++
-	}
-	sortedPIDs := tss.SortPartyIDs(partyIDs)
-	sort.Slice(keys, func(i, j int) bool { return keys[i].ShareID.Cmp(keys[j].ShareID) == -1 })
-	return keys, sortedPIDs, nil
+	_ = "STUB: not implemented"
+	return nil, *new(tss.SortedPartyIDs), nil
 }
 
-func makeTestFixtureFilePath(partyIndex int) string {
-	_, callerFileName, _, _ := runtime.Caller(0)
-	srcDirName := filepath.Dir(callerFileName)
-	fixtureDirName := fmt.Sprintf(testFixtureDirFormat, srcDirName)
-	return fmt.Sprintf("%s/"+testFixtureFileFormat, fixtureDirName, partyIndex)
-}
+func makeTestFixtureFilePath(partyIndex int) string { _ = "STUB: not implemented"; return "" }

@@ -7,11 +7,9 @@
 package schnorr
 
 import (
-	"errors"
 	"io"
 	"math/big"
 
-	"github.com/bnb-chain/tss-lib/v3/common"
 	"github.com/bnb-chain/tss-lib/v3/crypto"
 )
 
@@ -29,130 +27,37 @@ type (
 
 // NewZKProof constructs a new Schnorr ZK proof of knowledge of the discrete logarithm (GG18Spec Fig. 16)
 func NewZKProof(Session []byte, x *big.Int, X *crypto.ECPoint, rand io.Reader) (*ZKProof, error) {
-	if x == nil || X == nil || !X.ValidateBasic() {
-		return nil, errors.New("ZKProof constructor received nil or invalid value(s)")
-	}
-	ec := X.Curve()
-	ecParams := ec.Params()
-	q := ecParams.N
-	g := crypto.NewECPointNoCurveCheck(ec, ecParams.Gx, ecParams.Gy) // already on the curve.
-
-	a := common.GetRandomPositiveInt(rand, q)
-	alpha := crypto.ScalarBaseMult(ec, a)
-
-	var c *big.Int
-	{
-		cHash := common.SHA512_256i_TAGGED(Session, X.X(), X.Y(), g.X(), g.Y(), alpha.X(), alpha.Y())
-		c = common.RejectionSample(q, cHash)
-	}
-
-	var t *big.Int
-	modQ := common.ModInt(q)
-	if common.IsConstantTimeEnabled() {
-		// SECURITY: Use constant-time multiplication for secret x
-		ctModQ := common.NewCTModInt(q)
-		cx := ctModQ.MulCT(c, x)
-		t = modQ.Add(a, cx)
-	} else {
-		t = new(big.Int).Mul(c, x)
-		t = modQ.Add(a, t)
-	}
-
-	return &ZKProof{Alpha: alpha, T: t}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// already on the curve.
+
+// SECURITY: Use constant-time multiplication for secret x
 
 // NewZKProof verifies a new Schnorr ZK proof of knowledge of the discrete logarithm (GG18Spec Fig. 16)
 func (pf *ZKProof) Verify(Session []byte, X *crypto.ECPoint) bool {
-	if pf == nil || !pf.ValidateBasic() {
-		return false
-	}
-	ec := X.Curve()
-	ecParams := ec.Params()
-	q := ecParams.N
-	g := crypto.NewECPointNoCurveCheck(ec, ecParams.Gx, ecParams.Gy)
-
-	var c *big.Int
-	{
-		cHash := common.SHA512_256i_TAGGED(Session, X.X(), X.Y(), g.X(), g.Y(), pf.Alpha.X(), pf.Alpha.Y())
-		c = common.RejectionSample(q, cHash)
-	}
-	tG := crypto.ScalarBaseMult(ec, pf.T)
-	Xc := X.ScalarMult(c)
-	aXc, err := pf.Alpha.Add(Xc)
-	if err != nil {
-		return false
-	}
-	return aXc.X().Cmp(tG.X()) == 0 && aXc.Y().Cmp(tG.Y()) == 0
+	_ = "STUB: not implemented"
+	return false
 }
 
-func (pf *ZKProof) ValidateBasic() bool {
-	return pf.T != nil && pf.Alpha != nil
-}
+func (pf *ZKProof) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 // NewZKProof constructs a new Schnorr ZK proof of knowledge s_i, l_i such that V_i = R^s_i, g^l_i (GG18Spec Fig. 17)
 func NewZKVProof(Session []byte, V, R *crypto.ECPoint, s, l *big.Int, rand io.Reader) (*ZKVProof, error) {
-	if V == nil || R == nil || s == nil || l == nil || !V.ValidateBasic() || !R.ValidateBasic() {
-		return nil, errors.New("ZKVProof constructor received nil value(s)")
-	}
-	ec := V.Curve()
-	ecParams := ec.Params()
-	q := ecParams.N
-	g := crypto.NewECPointNoCurveCheck(ec, ecParams.Gx, ecParams.Gy)
-
-	a, b := common.GetRandomPositiveInt(rand, q), common.GetRandomPositiveInt(rand, q)
-	aR := R.ScalarMult(a)
-	bG := crypto.ScalarBaseMult(ec, b)
-	alpha, _ := aR.Add(bG) // already on the curve.
-
-	var c *big.Int
-	{
-		cHash := common.SHA512_256i_TAGGED(Session, V.X(), V.Y(), R.X(), R.Y(), g.X(), g.Y(), alpha.X(), alpha.Y())
-		c = common.RejectionSample(q, cHash)
-	}
-	modQ := common.ModInt(q)
-
-	var t, u *big.Int
-	if common.IsConstantTimeEnabled() {
-		// SECURITY: Use constant-time multiplication for secret values s and l
-		ctModQ := common.NewCTModInt(q)
-		cs := ctModQ.MulCT(c, s)
-		cl := ctModQ.MulCT(c, l)
-		t = modQ.Add(a, cs)
-		u = modQ.Add(b, cl)
-	} else {
-		t = modQ.Add(a, new(big.Int).Mul(c, s))
-		u = modQ.Add(b, new(big.Int).Mul(c, l))
-	}
-
-	return &ZKVProof{Alpha: alpha, T: t, U: u}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// already on the curve.
+
+// SECURITY: Use constant-time multiplication for secret values s and l
 
 func (pf *ZKVProof) Verify(Session []byte, V, R *crypto.ECPoint) bool {
-	if pf == nil || !pf.ValidateBasic() {
-		return false
-	}
-	ec := V.Curve()
-	ecParams := ec.Params()
-	q := ecParams.N
-	g := crypto.NewECPointNoCurveCheck(ec, ecParams.Gx, ecParams.Gy)
-
-	var c *big.Int
-	{
-		cHash := common.SHA512_256i_TAGGED(Session, V.X(), V.Y(), R.X(), R.Y(), g.X(), g.Y(), pf.Alpha.X(), pf.Alpha.Y())
-		c = common.RejectionSample(q, cHash)
-	}
-	tR := R.ScalarMult(pf.T)
-	uG := crypto.ScalarBaseMult(ec, pf.U)
-	tRuG, _ := tR.Add(uG) // already on the curve.
-
-	Vc := V.ScalarMult(c)
-	aVc, err := pf.Alpha.Add(Vc)
-	if err != nil {
-		return false
-	}
-	return tRuG.X().Cmp(aVc.X()) == 0 && tRuG.Y().Cmp(aVc.Y()) == 0
+	_ = "STUB: not implemented"
+	return false
 }
 
-func (pf *ZKVProof) ValidateBasic() bool {
-	return pf.Alpha != nil && pf.T != nil && pf.U != nil && pf.Alpha.ValidateBasic()
-}
+// already on the curve.
+
+func (pf *ZKVProof) ValidateBasic() bool { _ = "STUB: not implemented"; return false }

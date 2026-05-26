@@ -7,9 +7,6 @@
 package keygen
 
 import (
-	"math/big"
-
-	"github.com/bnb-chain/tss-lib/v3/common"
 	"github.com/bnb-chain/tss-lib/v3/tss"
 )
 
@@ -51,60 +48,29 @@ var (
 
 // ----- //
 
-func (round *base) Params() *tss.Parameters {
-	return round.Parameters
-}
+func (round *base) Params() *tss.Parameters { _ = "STUB: not implemented"; return nil }
 
-func (round *base) RoundNumber() int {
-	return round.number
-}
+func (round *base) RoundNumber() int { _ = "STUB: not implemented"; return 0 }
 
 // CanProceed is inherited by other rounds
-func (round *base) CanProceed() bool {
-	if !round.started {
-		return false
-	}
-	for _, ok := range round.ok {
-		if !ok {
-			return false
-		}
-	}
-	return true
-}
+func (round *base) CanProceed() bool { _ = "STUB: not implemented"; return false }
 
 // WaitingFor is called by a Party for reporting back to the caller
-func (round *base) WaitingFor() []*tss.PartyID {
-	Ps := round.Parties().IDs()
-	ids := make([]*tss.PartyID, 0, len(round.ok))
-	for j, ok := range round.ok {
-		if ok {
-			continue
-		}
-		ids = append(ids, Ps[j])
-	}
-	return ids
-}
+func (round *base) WaitingFor() []*tss.PartyID { _ = "STUB: not implemented"; return nil }
 
 func (round *base) WrapError(err error, culprits ...*tss.PartyID) *tss.Error {
-	return tss.NewError(err, TaskName, round.number, round.PartyID(), culprits...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // ----- //
 
 // `ok` tracks parties which have been verified by Update()
-func (round *base) resetOK() {
-	for j := range round.ok {
-		round.ok[j] = false
-	}
-}
+func (round *base) resetOK() { _ = "STUB: not implemented"; return }
 
 // get ssid from local params
-func (round *base) getSSID() ([]byte, error) {
-	ssidList := []*big.Int{round.EC().Params().P, round.EC().Params().N, round.EC().Params().Gx, round.EC().Params().Gy} // ec curve
-	ssidList = append(ssidList, round.Parties().IDs().Keys()...)
-	ssidList = append(ssidList, big.NewInt(int64(round.number))) // round number
-	ssidList = append(ssidList, round.temp.ssidNonce)
-	ssid := common.SHA512_256i(ssidList...).Bytes()
+func (round *base) getSSID() ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	return ssid, nil
-}
+// ec curve
+
+// round number

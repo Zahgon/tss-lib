@@ -13,10 +13,10 @@
 package common
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -26,7 +26,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//
 // Container for output signatures, mostly used for marshalling this data structure to a mobile app
 type SignatureData struct {
 	state         protoimpl.MessageState
@@ -43,72 +42,29 @@ type SignatureData struct {
 	M []byte `protobuf:"bytes,5,opt,name=m,proto3" json:"m,omitempty"`
 }
 
-func (x *SignatureData) Reset() {
-	*x = SignatureData{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_signature_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *SignatureData) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SignatureData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SignatureData) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SignatureData) ProtoMessage() {}
+func (*SignatureData) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SignatureData) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_signature_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SignatureData.ProtoReflect.Descriptor instead.
-func (*SignatureData) Descriptor() ([]byte, []int) {
-	return file_protob_signature_proto_rawDescGZIP(), []int{0}
-}
+func (*SignatureData) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SignatureData) GetSignature() []byte {
-	if x != nil {
-		return x.Signature
-	}
-	return nil
-}
+func (x *SignatureData) GetSignature() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignatureData) GetSignatureRecovery() []byte {
-	if x != nil {
-		return x.SignatureRecovery
-	}
-	return nil
-}
+func (x *SignatureData) GetSignatureRecovery() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignatureData) GetR() []byte {
-	if x != nil {
-		return x.R
-	}
-	return nil
-}
+func (x *SignatureData) GetR() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignatureData) GetS() []byte {
-	if x != nil {
-		return x.S
-	}
-	return nil
-}
+func (x *SignatureData) GetS() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignatureData) GetM() []byte {
-	if x != nil {
-		return x.M
-	}
-	return nil
-}
+func (x *SignatureData) GetM() []byte { _ = "STUB: not implemented"; return nil }
 
 var File_protob_signature_proto protoreflect.FileDescriptor
 
@@ -133,12 +89,7 @@ var (
 	file_protob_signature_proto_rawDescData = file_protob_signature_proto_rawDesc
 )
 
-func file_protob_signature_proto_rawDescGZIP() []byte {
-	file_protob_signature_proto_rawDescOnce.Do(func() {
-		file_protob_signature_proto_rawDescData = protoimpl.X.CompressGZIP(file_protob_signature_proto_rawDescData)
-	})
-	return file_protob_signature_proto_rawDescData
-}
+func file_protob_signature_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_protob_signature_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_protob_signature_proto_goTypes = []interface{}{
@@ -152,41 +103,5 @@ var file_protob_signature_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_protob_signature_proto_init() }
-func file_protob_signature_proto_init() {
-	if File_protob_signature_proto != nil {
-		return
-	}
-	if !protoimpl.UnsafeEnabled {
-		file_protob_signature_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SignatureData); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_protob_signature_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   1,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_protob_signature_proto_goTypes,
-		DependencyIndexes: file_protob_signature_proto_depIdxs,
-		MessageInfos:      file_protob_signature_proto_msgTypes,
-	}.Build()
-	File_protob_signature_proto = out.File
-	file_protob_signature_proto_rawDesc = nil
-	file_protob_signature_proto_goTypes = nil
-	file_protob_signature_proto_depIdxs = nil
-}
+func init()                             { file_protob_signature_proto_init() }
+func file_protob_signature_proto_init() { _ = "STUB: not implemented"; return }

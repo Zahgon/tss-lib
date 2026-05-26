@@ -7,44 +7,19 @@
 package resharing
 
 import (
-	"errors"
-
 	"github.com/bnb-chain/tss-lib/v3/tss"
 )
 
-func (round *round5) Start() *tss.Error {
-	if round.started {
-		return round.WrapError(errors.New("round already started"))
-	}
-	round.number = 5
-	round.started = true
+func (round *round5) Start() *tss.Error { _ = "STUB: not implemented"; return nil }
 
-	round.allOldOK()
-	round.allNewOK()
+// for this P: SAVE data
 
-	if round.IsNewCommittee() {
-		// for this P: SAVE data
-		round.save.BigXj = round.temp.newBigXjs
-		round.save.ShareID = round.PartyID().KeyInt()
-		round.save.Xi = round.temp.newXi
-		round.save.Ks = round.temp.newKs
+func (round *round5) CanAccept(msg tss.ParsedMessage) bool { _ = "STUB: not implemented"; return false }
 
-	} else if round.IsOldCommittee() {
-		round.input.Xi.SetInt64(0)
-	}
-
-	round.end <- round.save
-	return nil
-}
-
-func (round *round5) CanAccept(msg tss.ParsedMessage) bool {
-	return false
-}
-
-func (round *round5) Update() (bool, *tss.Error) {
-	return false, nil
-}
+func (round *round5) Update() (bool, *tss.Error) { _ = "STUB: not implemented"; return false, nil }
 
 func (round *round5) NextRound() tss.Round {
-	return nil // both committees are finished!
+	_ = "STUB: not implemented"
+	// both committees are finished!
+	return *new(tss.Round)
 }

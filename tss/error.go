@@ -6,10 +6,6 @@
 
 package tss
 
-import (
-	"fmt"
-)
-
 // fundamental is an error that has a message and a stack, but no caller.
 type Error struct {
 	cause    error
@@ -20,29 +16,20 @@ type Error struct {
 }
 
 func NewError(err error, task string, round int, victim *PartyID, culprits ...*PartyID) *Error {
-	return &Error{cause: err, task: task, round: round, victim: victim, culprits: culprits}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (err *Error) Unwrap() error { return err.cause }
+func (err *Error) Unwrap() error { _ = "STUB: not implemented"; return nil }
 
-func (err *Error) Cause() error { return err.cause }
+func (err *Error) Cause() error { _ = "STUB: not implemented"; return nil }
 
-func (err *Error) Task() string { return err.task }
+func (err *Error) Task() string { _ = "STUB: not implemented"; return "" }
 
-func (err *Error) Round() int { return err.round }
+func (err *Error) Round() int { _ = "STUB: not implemented"; return 0 }
 
-func (err *Error) Victim() *PartyID { return err.victim }
+func (err *Error) Victim() *PartyID { _ = "STUB: not implemented"; return nil }
 
-func (err *Error) Culprits() []*PartyID { return err.culprits }
+func (err *Error) Culprits() []*PartyID { _ = "STUB: not implemented"; return nil }
 
-func (err *Error) Error() string {
-	if err == nil || err.cause == nil {
-		return "Error is nil"
-	}
-	if err.culprits != nil && len(err.culprits) > 0 {
-		return fmt.Sprintf("task %s, party %v, round %d, culprits %s: %s",
-			err.task, err.victim, err.round, err.culprits, err.cause.Error())
-	}
-	return fmt.Sprintf("task %s, party %v, round %d: %s",
-		err.task, err.victim, err.round, err.cause.Error())
-}
+func (err *Error) Error() string { _ = "STUB: not implemented"; return "" }

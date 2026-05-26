@@ -7,10 +7,7 @@
 package tss
 
 import (
-	"fmt"
-
 	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/known/anypb"
 )
 
 type (
@@ -80,90 +77,46 @@ var (
 
 // NewMessageWrapper constructs a MessageWrapper from routing metadata and content
 func NewMessageWrapper(routing MessageRouting, content MessageContent) *MessageWrapper {
+	_ = "STUB: not implemented"
 	// marshal the content to the ProtoBuf Any type
-	any, _ := anypb.New(content)
-	// convert given PartyIDs to the wire format
-	var to []*MessageWrapper_PartyID
-	if routing.To != nil {
-		to = make([]*MessageWrapper_PartyID, len(routing.To))
-		for i := range routing.To {
-			to[i] = routing.To[i].MessageWrapper_PartyID
-		}
-	}
-	return &MessageWrapper{
-		IsBroadcast:             routing.IsBroadcast,
-		IsToOldCommittee:        routing.IsToOldCommittee,
-		IsToOldAndNewCommittees: routing.IsToOldAndNewCommittees,
-		From:                    routing.From.MessageWrapper_PartyID,
-		To:                      to,
-		Message:                 any,
-	}
+	return nil
 }
+
+// convert given PartyIDs to the wire format
 
 // ----- //
 
 func NewMessage(meta MessageRouting, content MessageContent, wire *MessageWrapper) ParsedMessage {
-	return &MessageImpl{
-		MessageRouting: meta,
-		content:        content,
-		wire:           wire,
-	}
+	_ = "STUB: not implemented"
+	return *new(ParsedMessage)
 }
 
-func (mm *MessageImpl) Type() string {
-	return string(proto.MessageName(mm.content))
-}
+func (mm *MessageImpl) Type() string { _ = "STUB: not implemented"; return "" }
 
-func (mm *MessageImpl) GetTo() []*PartyID {
-	return mm.To
-}
+func (mm *MessageImpl) GetTo() []*PartyID { _ = "STUB: not implemented"; return nil }
 
-func (mm *MessageImpl) GetFrom() *PartyID {
-	return mm.From
-}
+func (mm *MessageImpl) GetFrom() *PartyID { _ = "STUB: not implemented"; return nil }
 
-func (mm *MessageImpl) IsBroadcast() bool {
-	return mm.wire.IsBroadcast
-}
+func (mm *MessageImpl) IsBroadcast() bool { _ = "STUB: not implemented"; return false }
 
 // only `true` in DGRound2Message (resharing)
-func (mm *MessageImpl) IsToOldCommittee() bool {
-	return mm.wire.IsToOldCommittee
-}
+func (mm *MessageImpl) IsToOldCommittee() bool { _ = "STUB: not implemented"; return false }
 
 // only `true` in DGRound4Message (resharing)
-func (mm *MessageImpl) IsToOldAndNewCommittees() bool {
-	return mm.wire.IsToOldAndNewCommittees
-}
+func (mm *MessageImpl) IsToOldAndNewCommittees() bool { _ = "STUB: not implemented"; return false }
 
 func (mm *MessageImpl) WireBytes() ([]byte, *MessageRouting, error) {
-	bz, err := proto.Marshal(mm.wire.Message)
-	if err != nil {
-		return nil, nil, err
-	}
-	return bz, &mm.MessageRouting, nil
+	_ = "STUB: not implemented"
+	return nil, nil, nil
 }
 
-func (mm *MessageImpl) WireMsg() *MessageWrapper {
-	return mm.wire
-}
+func (mm *MessageImpl) WireMsg() *MessageWrapper { _ = "STUB: not implemented"; return nil }
 
 func (mm *MessageImpl) Content() MessageContent {
-	return mm.content
+	_ = "STUB: not implemented"
+	return *new(MessageContent)
 }
 
-func (mm *MessageImpl) ValidateBasic() bool {
-	return mm.content.ValidateBasic()
-}
+func (mm *MessageImpl) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
-func (mm *MessageImpl) String() string {
-	toStr := "all"
-	if mm.To != nil {
-		toStr = fmt.Sprintf("%v", mm.To)
-	}
-	extraStr := ""
-	if mm.IsToOldCommittee() {
-		extraStr = " (To Old Committee)"
-	}
-	return fmt.Sprintf("Type: %s, From: %s, To: %s%s", mm.Type(), mm.From.String(), toStr, extraStr)
-}
+func (mm *MessageImpl) String() string { _ = "STUB: not implemented"; return "" }

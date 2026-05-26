@@ -8,12 +8,10 @@ package common
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"math/big"
 	"sync"
-	"sync/atomic"
 )
 
 const (
@@ -27,32 +25,17 @@ type (
 	}
 )
 
-func (sgp *GermainSafePrime) Prime() *big.Int {
-	return sgp.q
-}
+func (sgp *GermainSafePrime) Prime() *big.Int { _ = "STUB: not implemented"; return nil }
 
-func (sgp *GermainSafePrime) SafePrime() *big.Int {
-	return sgp.p
-}
+func (sgp *GermainSafePrime) SafePrime() *big.Int { _ = "STUB: not implemented"; return nil }
 
-func (sgp *GermainSafePrime) Validate() bool {
-	return probablyPrime(sgp.q) &&
-		getSafePrime(sgp.q).Cmp(sgp.p) == 0 &&
-		probablyPrime(sgp.p)
-}
+func (sgp *GermainSafePrime) Validate() bool { _ = "STUB: not implemented"; return false }
 
 // ----- //
 
-func getSafePrime(p *big.Int) *big.Int {
-	i := new(big.Int)
-	i.Mul(p, two)
-	i.Add(i, one)
-	return i
-}
+func getSafePrime(p *big.Int) *big.Int { _ = "STUB: not implemented"; return nil }
 
-func probablyPrime(prime *big.Int) bool {
-	return prime != nil && prime.ProbablyPrime(primeTestN)
-}
+func probablyPrime(prime *big.Int) bool { _ = "STUB: not implemented"; return false }
 
 // ----- //
 
@@ -125,47 +108,8 @@ var ErrGeneratorCancelled = fmt.Errorf("generator work cancelled")
 // generated safe prime, the two most significant bits are always set to `1`
 // - we don't want the generated number to be too small.
 func GetRandomSafePrimesConcurrent(ctx context.Context, bitLen, numPrimes int, concurrency int, rand io.Reader) ([]*GermainSafePrime, error) {
-	if bitLen < 6 {
-		return nil, errors.New("safe prime size must be at least 6 bits")
-	}
-	if numPrimes < 1 {
-		return nil, errors.New("numPrimes should be > 0")
-	}
-
-	primeCh := make(chan *GermainSafePrime, concurrency*numPrimes)
-	errCh := make(chan error, concurrency)
-	primes := make([]*GermainSafePrime, 0, numPrimes)
-
-	waitGroup := &sync.WaitGroup{}
-
-	defer close(primeCh)
-	defer close(errCh)
-	defer waitGroup.Wait()
-
-	generatorCtx, cancelGeneratorCtx := context.WithCancel(ctx)
-	defer cancelGeneratorCtx()
-
-	for i := 0; i < concurrency; i++ {
-		waitGroup.Add(1)
-		runGenPrimeRoutine(
-			generatorCtx, primeCh, errCh, waitGroup, rand, bitLen,
-		)
-	}
-
-	needed := int32(numPrimes)
-	for {
-		select {
-		case result := <-primeCh:
-			primes = append(primes, result)
-			if atomic.AddInt32(&needed, -1) <= 0 {
-				return primes[:numPrimes], nil
-			}
-		case err := <-errCh:
-			return nil, err
-		case <-ctx.Done():
-			return nil, ErrGeneratorCancelled
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Starts a Goroutine searching for a safe prime of the specified `pBitLen`.
@@ -211,139 +155,53 @@ func runGenPrimeRoutine(
 	rand io.Reader,
 	pBitLen int,
 ) {
-	qBitLen := pBitLen - 1
-	b := uint(qBitLen % 8)
-	if b == 0 {
-		b = 8
-	}
-
-	bytes := make([]byte, (qBitLen+7)/8)
-	p := new(big.Int)
-	q := new(big.Int)
-
-	bigMod := new(big.Int)
-
-	go func() {
-		defer waitGroup.Done()
-
-		for {
-			select {
-			case <-ctx.Done():
-				return
-			default:
-				_, err := io.ReadFull(rand, bytes)
-				if err != nil {
-					errCh <- err
-					return
-				}
-
-				// Clear bits in the first byte to make sure the candidate has
-				// a size <= bits.
-				bytes[0] &= uint8(int(1<<b) - 1)
-				// Don't let the value be too small, i.e, set the most
-				// significant two bits.
-				// Setting the top two bits, rather than just the top bit,
-				// means that when two of these values are multiplied together,
-				// the result isn't ever one bit short.
-				if b >= 2 {
-					bytes[0] |= 3 << (b - 2)
-				} else {
-					// Here b==1, because b cannot be zero.
-					bytes[0] |= 1
-					if len(bytes) > 1 {
-						bytes[1] |= 0x80
-					}
-				}
-				// Make the value odd since an even number this large certainly
-				// isn't prime.
-				bytes[len(bytes)-1] |= 1
-
-				q.SetBytes(bytes)
-
-				// Calculate the value mod the product of smallPrimes. If it's
-				// a multiple of any of these primes we add two until it isn't.
-				// The probability of overflowing is minimal and can be ignored
-				// because we still perform Miller-Rabin tests on the result.
-				bigMod.Mod(q, smallPrimesProduct)
-				mod := bigMod.Uint64()
-
-			NextDelta:
-				for delta := uint64(0); delta < 1<<20; delta += 2 {
-					m := mod + delta
-					for _, prime := range smallPrimes {
-						if m%uint64(prime) == 0 && (qBitLen > 6 || m != uint64(prime)) {
-							continue NextDelta
-						}
-					}
-
-					if delta > 0 {
-						bigMod.SetUint64(delta)
-						q.Add(q, bigMod)
-					}
-
-					// If `q = 1 (mod 3)`, then `p` is a multiple of `3` so it's
-					// obviously no prime and such `q` should be rejected.
-					// This will happen in 50% of cases and we should detect
-					// and eliminate them early.
-					//
-					// Explanation:
-					// If q = 1 (mod 3) then there exists a q' such that:
-					// q = 3q' + 1
-					//
-					// Since p = 2q + 1:
-					// p = 2q + 1 = 2(3q' + 1) + 1 = 6q' + 2 + 1 = 6q' + 3 =
-					//   = 3(2q' + 1)
-					// So `p` is a multiple of `3`.
-					qMod3 := new(big.Int).Mod(q, big.NewInt(3))
-					if qMod3.Cmp(big.NewInt(1)) == 0 {
-						continue NextDelta
-					}
-
-					// p = 2q+1
-					p.Mul(q, big.NewInt(2))
-					p.Add(p, big.NewInt(1))
-					if !isPrimeCandidate(p) {
-						continue NextDelta
-					}
-
-					break
-				}
-
-				// There is a tiny possibility that, by adding delta, we caused
-				// the number to be one bit too long. Thus we check BitLen
-				// here.
-				if q.ProbablyPrime(20) &&
-					isPocklingtonCriterionSatisfied(p) &&
-					q.BitLen() == qBitLen {
-
-					if sgp := (&GermainSafePrime{p: p, q: q}); sgp.Validate() {
-						primeCh <- &GermainSafePrime{p: p, q: q}
-					}
-					p, q = new(big.Int), new(big.Int)
-				}
-			}
-		}
-	}()
+	_ = "STUB: not implemented"
+	return
 }
+
+// Clear bits in the first byte to make sure the candidate has
+// a size <= bits.
+
+// Don't let the value be too small, i.e, set the most
+// significant two bits.
+// Setting the top two bits, rather than just the top bit,
+// means that when two of these values are multiplied together,
+// the result isn't ever one bit short.
+
+// Here b==1, because b cannot be zero.
+
+// Make the value odd since an even number this large certainly
+// isn't prime.
+
+// Calculate the value mod the product of smallPrimes. If it's
+// a multiple of any of these primes we add two until it isn't.
+// The probability of overflowing is minimal and can be ignored
+// because we still perform Miller-Rabin tests on the result.
+
+// If `q = 1 (mod 3)`, then `p` is a multiple of `3` so it's
+// obviously no prime and such `q` should be rejected.
+// This will happen in 50% of cases and we should detect
+// and eliminate them early.
+//
+// Explanation:
+// If q = 1 (mod 3) then there exists a q' such that:
+// q = 3q' + 1
+//
+// Since p = 2q + 1:
+// p = 2q + 1 = 2(3q' + 1) + 1 = 6q' + 2 + 1 = 6q' + 3 =
+//   = 3(2q' + 1)
+// So `p` is a multiple of `3`.
+
+// p = 2q+1
+
+// There is a tiny possibility that, by adding delta, we caused
+// the number to be one bit too long. Thus we check BitLen
+// here.
 
 // Pocklington's criterion can be used to prove the primality of `p = 2q + 1`
 // once one has proven the primality of `q`.
 // With `q` prime, `p = 2q + 1`, and `p` passing Fermat's primality test to base
 // `2` that `2^{p-1} = 1 (mod p)` then `p` is prime as well.
-func isPocklingtonCriterionSatisfied(p *big.Int) bool {
-	return new(big.Int).Exp(
-		big.NewInt(2),
-		new(big.Int).Sub(p, big.NewInt(1)),
-		p,
-	).Cmp(big.NewInt(1)) == 0
-}
+func isPocklingtonCriterionSatisfied(p *big.Int) bool { _ = "STUB: not implemented"; return false }
 
-func isPrimeCandidate(number *big.Int) bool {
-	m := new(big.Int).Mod(number, smallPrimesProduct).Uint64()
-	for _, prime := range smallPrimes {
-		if m%uint64(prime) == 0 && m != uint64(prime) {
-			return false
-		}
-	}
-	return true
-}
+func isPrimeCandidate(number *big.Int) bool { _ = "STUB: not implemented"; return false }

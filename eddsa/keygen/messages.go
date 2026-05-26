@@ -10,8 +10,6 @@ import (
 	"crypto/elliptic"
 	"math/big"
 
-	"github.com/bnb-chain/tss-lib/v3/common"
-	"github.com/bnb-chain/tss-lib/v3/crypto"
 	cmt "github.com/bnb-chain/tss-lib/v3/crypto/commitments"
 	"github.com/bnb-chain/tss-lib/v3/crypto/schnorr"
 	"github.com/bnb-chain/tss-lib/v3/crypto/vss"
@@ -33,24 +31,13 @@ var (
 // ----- //
 
 func NewKGRound1Message(from *tss.PartyID, ct cmt.HashCommitment) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		IsBroadcast: true,
-	}
-	content := &KGRound1Message{
-		Commitment: ct.Bytes(),
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound1Message) ValidateBasic() bool {
-	return m != nil && common.NonEmptyBytes(m.GetCommitment())
-}
+func (m *KGRound1Message) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
-func (m *KGRound1Message) UnmarshalCommitment() *big.Int {
-	return new(big.Int).SetBytes(m.GetCommitment())
-}
+func (m *KGRound1Message) UnmarshalCommitment() *big.Int { _ = "STUB: not implemented"; return nil }
 
 // ----- //
 
@@ -58,26 +45,13 @@ func NewKGRound2Message1(
 	to, from *tss.PartyID,
 	share *vss.Share,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		To:          []*tss.PartyID{to},
-		IsBroadcast: false,
-	}
-	content := &KGRound2Message1{
-		Share: share.Share.Bytes(),
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound2Message1) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyBytes(m.GetShare())
-}
+func (m *KGRound2Message1) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
-func (m *KGRound2Message1) UnmarshalShare() *big.Int {
-	return new(big.Int).SetBytes(m.Share)
-}
+func (m *KGRound2Message1) UnmarshalShare() *big.Int { _ = "STUB: not implemented"; return nil }
 
 // ----- //
 
@@ -86,41 +60,18 @@ func NewKGRound2Message2(
 	deCommitment cmt.HashDeCommitment,
 	proof *schnorr.ZKProof,
 ) tss.ParsedMessage {
-	meta := tss.MessageRouting{
-		From:        from,
-		IsBroadcast: true,
-	}
-	dcBzs := common.BigIntsToBytes(deCommitment)
-	content := &KGRound2Message2{
-		DeCommitment: dcBzs,
-		ProofAlphaX:  proof.Alpha.X().Bytes(),
-		ProofAlphaY:  proof.Alpha.Y().Bytes(),
-		ProofT:       proof.T.Bytes(),
-	}
-	msg := tss.NewMessageWrapper(meta, content)
-	return tss.NewMessage(meta, content, msg)
+	_ = "STUB: not implemented"
+	return *new(tss.ParsedMessage)
 }
 
-func (m *KGRound2Message2) ValidateBasic() bool {
-	return m != nil &&
-		common.NonEmptyMultiBytes(m.GetDeCommitment())
-}
+func (m *KGRound2Message2) ValidateBasic() bool { _ = "STUB: not implemented"; return false }
 
 func (m *KGRound2Message2) UnmarshalDeCommitment() []*big.Int {
-	deComBzs := m.GetDeCommitment()
-	return cmt.NewHashDeCommitmentFromBytes(deComBzs)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (m *KGRound2Message2) UnmarshalZKProof(ec elliptic.Curve) (*schnorr.ZKProof, error) {
-	point, err := crypto.NewECPoint(
-		ec,
-		new(big.Int).SetBytes(m.GetProofAlphaX()),
-		new(big.Int).SetBytes(m.GetProofAlphaY()))
-	if err != nil {
-		return nil, err
-	}
-	return &schnorr.ZKProof{
-		Alpha: point,
-		T:     new(big.Int).SetBytes(m.GetProofT()),
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

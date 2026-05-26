@@ -13,10 +13,10 @@
 package signing
 
 import (
+	sync "sync"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
@@ -26,7 +26,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-//
 // Represents a BROADCAST message sent to all parties during Round 1 of the EDDSA TSS signing protocol.
 type SignRound1Message struct {
 	state         protoimpl.MessageState
@@ -36,46 +35,22 @@ type SignRound1Message struct {
 	Commitment []byte `protobuf:"bytes,1,opt,name=commitment,proto3" json:"commitment,omitempty"`
 }
 
-func (x *SignRound1Message) Reset() {
-	*x = SignRound1Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_signing_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *SignRound1Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SignRound1Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SignRound1Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SignRound1Message) ProtoMessage() {}
+func (*SignRound1Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SignRound1Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_signing_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SignRound1Message.ProtoReflect.Descriptor instead.
-func (*SignRound1Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_signing_proto_rawDescGZIP(), []int{0}
-}
+func (*SignRound1Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SignRound1Message) GetCommitment() []byte {
-	if x != nil {
-		return x.Commitment
-	}
-	return nil
-}
+func (x *SignRound1Message) GetCommitment() []byte { _ = "STUB: not implemented"; return nil }
 
-//
 // Represents a BROADCAST message sent to all parties during Round 2 of the EDDSA TSS signing protocol.
 type SignRound2Message struct {
 	state         protoimpl.MessageState
@@ -88,67 +63,28 @@ type SignRound2Message struct {
 	ProofT       []byte   `protobuf:"bytes,4,opt,name=proof_t,json=proofT,proto3" json:"proof_t,omitempty"`
 }
 
-func (x *SignRound2Message) Reset() {
-	*x = SignRound2Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_signing_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *SignRound2Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SignRound2Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SignRound2Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SignRound2Message) ProtoMessage() {}
+func (*SignRound2Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SignRound2Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_signing_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SignRound2Message.ProtoReflect.Descriptor instead.
-func (*SignRound2Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_signing_proto_rawDescGZIP(), []int{1}
-}
+func (*SignRound2Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SignRound2Message) GetDeCommitment() [][]byte {
-	if x != nil {
-		return x.DeCommitment
-	}
-	return nil
-}
+func (x *SignRound2Message) GetDeCommitment() [][]byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignRound2Message) GetProofAlphaX() []byte {
-	if x != nil {
-		return x.ProofAlphaX
-	}
-	return nil
-}
+func (x *SignRound2Message) GetProofAlphaX() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignRound2Message) GetProofAlphaY() []byte {
-	if x != nil {
-		return x.ProofAlphaY
-	}
-	return nil
-}
+func (x *SignRound2Message) GetProofAlphaY() []byte { _ = "STUB: not implemented"; return nil }
 
-func (x *SignRound2Message) GetProofT() []byte {
-	if x != nil {
-		return x.ProofT
-	}
-	return nil
-}
+func (x *SignRound2Message) GetProofT() []byte { _ = "STUB: not implemented"; return nil }
 
-//
 // Represents a BROADCAST message sent to all parties during Round 3 of the EDDSA TSS signing protocol.
 type SignRound3Message struct {
 	state         protoimpl.MessageState
@@ -158,44 +94,21 @@ type SignRound3Message struct {
 	S []byte `protobuf:"bytes,1,opt,name=s,proto3" json:"s,omitempty"`
 }
 
-func (x *SignRound3Message) Reset() {
-	*x = SignRound3Message{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_protob_eddsa_signing_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
+func (x *SignRound3Message) Reset() { _ = "STUB: not implemented"; return }
 
-func (x *SignRound3Message) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
+func (x *SignRound3Message) String() string { _ = "STUB: not implemented"; return "" }
 
-func (*SignRound3Message) ProtoMessage() {}
+func (*SignRound3Message) ProtoMessage() { _ = "STUB: not implemented"; return }
 
 func (x *SignRound3Message) ProtoReflect() protoreflect.Message {
-	mi := &file_protob_eddsa_signing_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
+	_ = "STUB: not implemented"
+	return *new(protoreflect.Message)
 }
 
 // Deprecated: Use SignRound3Message.ProtoReflect.Descriptor instead.
-func (*SignRound3Message) Descriptor() ([]byte, []int) {
-	return file_protob_eddsa_signing_proto_rawDescGZIP(), []int{2}
-}
+func (*SignRound3Message) Descriptor() ([]byte, []int) { _ = "STUB: not implemented"; return nil, nil }
 
-func (x *SignRound3Message) GetS() []byte {
-	if x != nil {
-		return x.S
-	}
-	return nil
-}
+func (x *SignRound3Message) GetS() []byte { _ = "STUB: not implemented"; return nil }
 
 var File_protob_eddsa_signing_proto protoreflect.FileDescriptor
 
@@ -228,12 +141,7 @@ var (
 	file_protob_eddsa_signing_proto_rawDescData = file_protob_eddsa_signing_proto_rawDesc
 )
 
-func file_protob_eddsa_signing_proto_rawDescGZIP() []byte {
-	file_protob_eddsa_signing_proto_rawDescOnce.Do(func() {
-		file_protob_eddsa_signing_proto_rawDescData = protoimpl.X.CompressGZIP(file_protob_eddsa_signing_proto_rawDescData)
-	})
-	return file_protob_eddsa_signing_proto_rawDescData
-}
+func file_protob_eddsa_signing_proto_rawDescGZIP() []byte { _ = "STUB: not implemented"; return nil }
 
 var file_protob_eddsa_signing_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_protob_eddsa_signing_proto_goTypes = []interface{}{
@@ -249,65 +157,5 @@ var file_protob_eddsa_signing_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_protob_eddsa_signing_proto_init() }
-func file_protob_eddsa_signing_proto_init() {
-	if File_protob_eddsa_signing_proto != nil {
-		return
-	}
-	if !protoimpl.UnsafeEnabled {
-		file_protob_eddsa_signing_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SignRound1Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_signing_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SignRound2Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_protob_eddsa_signing_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SignRound3Message); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-	}
-	type x struct{}
-	out := protoimpl.TypeBuilder{
-		File: protoimpl.DescBuilder{
-			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_protob_eddsa_signing_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   3,
-			NumExtensions: 0,
-			NumServices:   0,
-		},
-		GoTypes:           file_protob_eddsa_signing_proto_goTypes,
-		DependencyIndexes: file_protob_eddsa_signing_proto_depIdxs,
-		MessageInfos:      file_protob_eddsa_signing_proto_msgTypes,
-	}.Build()
-	File_protob_eddsa_signing_proto = out.File
-	file_protob_eddsa_signing_proto_rawDesc = nil
-	file_protob_eddsa_signing_proto_goTypes = nil
-	file_protob_eddsa_signing_proto_depIdxs = nil
-}
+func init()                                 { file_protob_eddsa_signing_proto_init() }
+func file_protob_eddsa_signing_proto_init() { _ = "STUB: not implemented"; return }

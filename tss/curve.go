@@ -8,8 +8,6 @@ package tss
 
 import (
 	"crypto/elliptic"
-	"errors"
-	"reflect"
 
 	s256k1 "github.com/btcsuite/btcd/btcec/v2"
 	"github.com/decred/dcrd/dcrec/edwards/v2"
@@ -36,60 +34,37 @@ func init() {
 	registry[Ed25519] = edwards.Edwards()
 }
 
-func RegisterCurve(name CurveName, curve elliptic.Curve) {
-	registry[name] = curve
-}
+func RegisterCurve(name CurveName, curve elliptic.Curve) { _ = "STUB: not implemented"; return }
 
 // return curve, exist(bool)
 func GetCurveByName(name CurveName) (elliptic.Curve, bool) {
-	if val, exist := registry[name]; exist {
-		return val, true
-	}
-
-	return nil, false
+	_ = "STUB: not implemented"
+	return *new(elliptic.Curve), false
 }
 
 // return name, exist(bool)
 func GetCurveName(curve elliptic.Curve) (CurveName, bool) {
-	for name, e := range registry {
-		if reflect.TypeOf(curve) == reflect.TypeOf(e) {
-			return name, true
-		}
-	}
-
-	return "", false
+	_ = "STUB: not implemented"
+	return *new(CurveName), false
 }
 
 // SameCurve returns true if both lhs and rhs are the same known curve
-func SameCurve(lhs, rhs elliptic.Curve) bool {
-	lName, lOk := GetCurveName(lhs)
-	rName, rOk := GetCurveName(rhs)
-	if lOk && rOk {
-		return lName == rName
-	}
-	// if lhs/rhs not exist, return false
-	return false
-}
+func SameCurve(lhs, rhs elliptic.Curve) bool { _ = "STUB: not implemented"; return false }
+
+// if lhs/rhs not exist, return false
 
 // EC returns the current elliptic curve in use. The default is secp256k1
 func EC() elliptic.Curve {
-	return ec
+	_ = "STUB: not implemented"
+
+	// SetCurve sets the curve used by TSS. Must be called before Start. The default is secp256k1
+	// Deprecated
+	return *new(elliptic.Curve)
 }
 
-// SetCurve sets the curve used by TSS. Must be called before Start. The default is secp256k1
-// Deprecated
-func SetCurve(curve elliptic.Curve) {
-	if curve == nil {
-		panic(errors.New("SetCurve received a nil curve"))
-	}
-	ec = curve
-}
+func SetCurve(curve elliptic.Curve) { _ = "STUB: not implemented"; return }
 
 // secp256k1
-func S256() elliptic.Curve {
-	return s256k1.S256()
-}
+func S256() elliptic.Curve { _ = "STUB: not implemented"; return *new(elliptic.Curve) }
 
-func Edwards() elliptic.Curve {
-	return edwards.Edwards()
-}
+func Edwards() elliptic.Curve { _ = "STUB: not implemented"; return *new(elliptic.Curve) }
